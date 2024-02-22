@@ -1,0 +1,155 @@
+import {
+  Apartment,
+  ApartmentSharp,
+  Home,
+  ShoppingCart,
+} from "@mui/icons-material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import PropertyListing from "../PropertyListing";
+import Section from "../../containers/section";
+import { Montserrat } from "next/font/google";
+
+const font = Montserrat({ subsets: ["cyrillic"] });
+
+function Properties() {
+  return (
+    <Section>
+      <Typography
+        variant="h3"
+        textAlign={"center"}
+        fontWeight={"bold"}
+        color={"#3e3d39"}
+        className={font.className}
+        fontSize={"3rem"}
+        letterSpacing={"0.4px"}
+      >
+        Our Properties
+      </Typography>
+      <Typography
+        variant="h5"
+        textAlign={"center"}
+        color={"gray.main"}
+        m={"1.5rem 0"}
+        className={font.className}
+        fontSize={"1rem"}
+      >
+        Navigate Your Ideal Neighborhood: Explore Homes Carefully Curated for
+        Specific Lifestyles
+      </Typography>
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          m: "1rem 0",
+          maxWidth: { lg: "unset" },
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            color: "white",
+            bgcolor: "gray",
+            boxShadow: "none",
+            padding: "0.5rem 1.5rem",
+            fontSize: "0.75rem",
+          }}
+          startIcon={<Apartment />}
+        >
+          Luxury Apartments
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            color: "white",
+            bgcolor: "gray",
+            boxShadow: "none",
+            padding: "0.5rem 1.5rem",
+            fontSize: "0.75rem",
+          }}
+          startIcon={<ShoppingCart />}
+        >
+          Shops
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            color: "white",
+            bgcolor: "gray",
+            boxShadow: "none",
+            padding: "0.5rem 1.5rem",
+            fontSize: "0.75rem",
+          }}
+          startIcon={<Home />}
+        >
+          Villas
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            color: "white",
+            bgcolor: "gray",
+            boxShadow: "none",
+            padding: "0.5rem 1.5rem",
+            fontSize: "0.75rem",
+          }}
+          startIcon={<ApartmentSharp />}
+        >
+          Standard Apartments
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            color: "white",
+            bgcolor: "gray",
+            boxShadow: "none",
+            padding: "0.5rem 1.5rem",
+            fontSize: "0.75rem",
+          }}
+          startIcon={<Apartment />}
+        >
+          Roha Apartments
+        </Button>
+      </Container>
+
+      <Grid
+        container
+        spacing={4}
+        mt={"2rem"}
+        // p={"0 3rem"}
+      >
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/1.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/2.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/3.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/4.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/5.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/6.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/7.jpg"} />
+        </Grid>
+        <Grid item md={3}>
+          <PropertyListing imgSrc={"/images/8.jpg"} />
+        </Grid>
+      </Grid>
+      <Box display={"flex"} justifyContent={"center"} mt={"1.5rem"}>
+        <Button variant="contained" sx={{ p: "0.75rem 2rem" }}>
+          See More Properties
+        </Button>
+      </Box>
+    </Section>
+  );
+}
+
+export default Properties;
