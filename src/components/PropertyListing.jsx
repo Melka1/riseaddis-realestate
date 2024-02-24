@@ -97,7 +97,7 @@ function PropertyListing({ imgSrc }) {
         bgcolor={"rgba(0,0,0,0.1)"}
         display={"flex"}
         flexDirection={"column"}
-        gap={"1rem"}
+        gap={"0.25rem"}
       >
         <Box
           display={"flex"}
@@ -122,7 +122,7 @@ function PropertyListing({ imgSrc }) {
             )}
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: "white" }} />
+        <Divider sx={{ borderColor: "white", m: "0.5rem 0" }} />
         <Box
           display={"flex"}
           flexDirection={"row"}
