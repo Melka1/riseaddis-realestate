@@ -42,7 +42,6 @@ function PropertySearchBar() {
   const [price, setPrice] = useState(["min", "max"]);
   const [parking, setParking] = useState("Any");
   const [area, setArea] = useState({ min: "any", max: "any" });
-  console.log(propListCheck);
 
   const handleSetParking = (event) => {
     setParking(event.target.value);
@@ -109,6 +108,7 @@ function PropertySearchBar() {
       width={1}
       gap={"0.5rem"}
       alignItems={"stretch"}
+      zIndex={500}
     >
       <Paper
         component="form"
@@ -151,6 +151,7 @@ function PropertySearchBar() {
             border={"1px solid lightgray"}
             borderRadius={"0.5rem"}
             minWidth={150}
+            bgcolor={"white"}
           >
             <Button
               fullWidth
@@ -218,6 +219,7 @@ function PropertySearchBar() {
             top={"120%"}
             border={"1px solid lightgray"}
             borderRadius={"0.5rem"}
+            bgcolor={"white"}
           >
             <Typography
               bgcolor={"rgba(0,0,0, 0.05)"}
@@ -322,6 +324,7 @@ function PropertySearchBar() {
             top={"120%"}
             border={"1px solid lightgray"}
             borderRadius={"0.5rem"}
+            bgcolor={"white"}
           >
             <Typography
               bgcolor={"rgba(0,0,0, 0.05)"}
@@ -441,6 +444,7 @@ function PropertySearchBar() {
             top={"120%"}
             border={"1px solid lightgray"}
             borderRadius={"0.5rem"}
+            bgcolor={"white"}
           >
             <Typography
               bgcolor={"rgba(0,0,0, 0.05)"}
@@ -528,6 +532,7 @@ function PropertySearchBar() {
             right={0}
             border={"1px solid lightgray"}
             borderRadius={"0.5rem"}
+            bgcolor={"white"}
           >
             <Typography
               bgcolor={"rgba(0,0,0, 0.05)"}
@@ -666,6 +671,13 @@ function PropertySearchBar() {
           </Box>
         )}
       </Box>
+      <Button
+        variant={"outlined"}
+        color="rise"
+        sx={{ borderColor: "rise.light" }}
+      >
+        Save Search
+      </Button>
     </Box>
   );
 }

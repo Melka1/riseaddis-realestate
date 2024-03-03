@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Bathtub,
   Bed,
@@ -8,16 +9,26 @@ import {
   ZoomOutMapSharp,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
-import { useState } from "react";
 import styles from "./styles/propertiesListing.module.css";
 import { Montserrat } from "next/font/google";
+import { useRouter } from "next/router";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
-function PropertyListing({ imgSrc }) {
+function PropertyListing({ imgSrc, openDetail, id }) {
+  const router = useRouter();
   const [like, setLike] = useState(false);
   return (
-    <Box width={1} className={styles["property-image"]}>
+    <Box
+      width={1}
+      className={styles["property-image"]}
+      component={"div"}
+      // href="http://localhost:3000/property?id=4"
+      onClick={() => {
+        // openDetail(true);
+        router.push(`?id=${id}`);
+      }}
+    >
       <Box position={"relative"} overflow={"hidden"}>
         <Box
           component={"img"}

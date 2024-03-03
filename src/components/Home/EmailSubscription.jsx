@@ -8,7 +8,7 @@ function EmailSubscription() {
         p: { md: "3rem", lg: "5rem" },
         // background:
         //   "url(https://res.cloudinary.com/dov9kdlci/image/upload/v1708434278/Shapes.1ca18eb4_ahjxch.png) #7f57f1",
-        background: "url(/images/bg.png) #7f57f1",
+        background: "url(/images/mail.png) #f7941f",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
         backgroundPosition: "100px 0",
@@ -54,9 +54,9 @@ function EmailSubscription() {
         <Box display={"flex"} width={1}>
           <Input
             disableUnderline={true}
+            color="rise"
             sx={{
               background: "white",
-              color: "gray",
               borderRadius: "0.5rem 0 0 0.5rem",
               boxShadow: "none",
               outline: "none",
@@ -70,11 +70,11 @@ function EmailSubscription() {
           />
           <Button
             variant="contained"
+            color="rise"
             sx={{
               p: "0.5rem 2.5rem",
               borderRadius: "0 0.5rem 0.5rem 0",
               fontSize: "1rem",
-              background: "#7f57f1",
               letterSpacing: "0.4px",
             }}
           >

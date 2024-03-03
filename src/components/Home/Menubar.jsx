@@ -1,24 +1,34 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { Adb } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/menu";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+  Menu,
+} from "@mui/material";
 
-const pages = ["Home", "Properties", "Gallery", "Blog", "Contact", "About Us"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { Link } from "@mui/material";
+import { useState } from "react";
+
+const pages = [
+  { name: "Home", link: "" },
+  { name: "Properties", link: "property" },
+  { name: "Gallery", link: "gallery" },
+  { name: "Blog", link: "blog" },
+  { name: "Contact", link: "contact" },
+  // { name: "About Us", link: "about-us" },
+];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +46,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "#3e3d39" }}>
+    <AppBar position="sticky" sx={{ bgcolor: "rise.main" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
@@ -78,7 +88,9 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon
+                sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+              />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -99,13 +111,13 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                <Link key={page.name} href="#" underline="hover">
+                  {page.name}
+                </Link>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Adb sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -133,11 +145,13 @@ function ResponsiveAppBar() {
           >
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Link href={`/${page.link}`} underline="none" color={"white"}>
+                  {page.name}
+                </Link>
               </Button>
             ))}
           </Box>
@@ -168,11 +182,46 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Box
+                  variant="a"
+                  textAlign="center"
+                  component={"a"}
+                  href="/profile"
+                >
+                  Profile
+                </Box>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Box
+                  variant="a"
+                  textAlign="center"
+                  component={"a"}
+                  href="/account"
+                >
+                  Account
+                </Box>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Box
+                  variant="a"
+                  textAlign="center"
+                  component={"a"}
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Box>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Box
+                  variant="a"
+                  textAlign="center"
+                  component={"a"}
+                  href="/signin"
+                >
+                  Log out
+                </Box>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
