@@ -1,5 +1,5 @@
 import { Adb } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/menu";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Avatar,
