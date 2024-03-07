@@ -1,5 +1,4 @@
 import { Add, Remove, Search } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
 import {
   Box,
   Button,
@@ -10,79 +9,33 @@ import {
   Grid,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { riseFont } from "@/pages/_app";
 import { useRouter } from "next/router";
 
-const amenityList = [
-  "Back yard",
-  "Central Air",
-  "Chair Accessible",
-  "Front yard",
-  "Garage Attached",
-  "Laundry",
-];
-
-const Item = styled(Paper)(({ theme }) => {
-  return {
-    ...theme.typography.body2,
-    textAlign: "left",
-    color: theme.palette.text.secondary,
-    width: "100%",
-    boxShadow: "none",
-    borderRadius: "1rem",
-  };
-});
+import { riseFont } from "@/pages/_app";
+import { Item } from "@/containers/ItemPaper";
+import { useStore } from "@/Context/store";
 
 export default function SearchSection() {
   const router = useRouter();
 
-  const [type, setType] = useState("");
-  const [bedroom, setBedroom] = useState("");
-  const [bathroom, setBathroom] = useState("");
-  const [moreOptions, setMoreOptions] = useState(false);
-  const [amenities, setAmenities] = useState(
-    Array(amenityList.length).fill(false)
-  );
+  const searchConditions = useStore((state) => state.searchConditions);
+  const setSearchConditions = useStore((state) => state.setSearchConditions);
 
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-  };
-
-  const handleBedroomChange = (event) => {
-    setBedroom(event.target.value);
-  };
-
-  const handleBathroomChange = (event) => {
-    setBathroom(event.target.value);
-  };
-
-  const toggleShowMoreOptions = () => {
-    setMoreOptions(!moreOptions);
-  };
-
-  const handleChangeAmenity = (index) => {
-    setAmenities((prev) =>
-      prev.map((ind) => {
-        if (ind == index) prev[ind] = !prev[ind];
-      })
-    );
-  };
+  const { type, bedroom, bathroom, moreOptions, amenities } = searchConditions;
+  console.log(searchConditions, "searchsection");
 
   return (
     <Box
       component={"div"}
       sx={{
-        p: { md: "3rem", lg: "5rem" },
+        p: { md: "3rem", lg: "7rem 5rem" },
         // backgroundImage:
         //   "url(https://res.cloudinary.com/dov9kdlci/image/upload/v1708298559/pexels-david-mcbee-1546168_bpplg9.jpg)",
         backgroundImage: "url(./images/11.jpg)",
         backgroundSize: "cover",
-        // backgroundPositionY: "50%",
       }}
       width={1}
     >
@@ -122,7 +75,9 @@ export default function SearchSection() {
                     id="demo-select-small"
                     value={type}
                     label="Product Type"
-                    onChange={handleTypeChange}
+                    onChange={(e) =>
+                      setSearchConditions("type", e.target.value)
+                    }
                     sx={{ textAlign: "left" }}
                   >
                     <MenuItem value="">
@@ -145,7 +100,9 @@ export default function SearchSection() {
                     id="demo-select-small"
                     value={bedroom}
                     label="Bedroom"
-                    onChange={handleBedroomChange}
+                    onChange={({ target }) =>
+                      setSearchConditions("bedroom", target.value)
+                    }
                     sx={{ textAlign: "left" }}
                   >
                     <MenuItem value="">
@@ -171,7 +128,9 @@ export default function SearchSection() {
                     id="demo-select-small"
                     value={bathroom}
                     label="Bathroom"
-                    onChange={handleBathroomChange}
+                    onChange={({ target }) =>
+                      setSearchConditions("bathroom", target.value)
+                    }
                     sx={{ textAlign: "left" }}
                   >
                     <MenuItem value="">
@@ -205,17 +164,18 @@ export default function SearchSection() {
 
           {moreOptions && (
             <Grid container spacing={0} maxWidth={"100%"} ml={0} p={"1rem"}>
-              {amenityList.map((amenity, index) => (
-                <Grid key={amenity} item md={3} textAlign={"left"}>
+              {amenities.map((amenity, index) => (
+                <Grid key={amenity.name} item md={3} textAlign={"left"}>
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={amenities[index]}
-                        onChange={() => handleChangeAmenity(index)}
+                        checked={amenity.value}
+                        onChange={() => setSearchConditions("amenities", index)}
                         size="medium"
+                        color="rise"
                       />
                     }
-                    label={amenity}
+                    label={amenity.name}
                     sx={{ color: "rise.main", fontSize: "1.1rem" }}
                   />
                 </Grid>
@@ -225,7 +185,7 @@ export default function SearchSection() {
           <Button
             variant={"text"}
             endIcon={!moreOptions ? <Add /> : <Remove />}
-            onClick={() => toggleShowMoreOptions()}
+            onClick={() => setSearchConditions("moreOptions")}
             color="rise"
           >
             {!moreOptions ? "More " : "Less "} Options

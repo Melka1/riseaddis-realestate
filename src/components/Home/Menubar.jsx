@@ -28,9 +28,10 @@ const pages = [
 function ResponsiveAppBar() {
   const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
-  console.log(user);
+  console.log(user, "user");
 
   useEffect(() => {
+    console.log(user);
     setUser({ name: "John" });
   }, []);
 
