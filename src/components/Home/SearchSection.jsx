@@ -7,7 +7,6 @@ import {
   Container,
   FormControl,
   FormControlLabel,
-  FormGroup,
   Grid,
   InputLabel,
   MenuItem,
@@ -16,6 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { riseFont } from "@/pages/_app";
+import { useRouter } from "next/router";
 
 const amenityList = [
   "Back yard",
@@ -38,6 +39,8 @@ const Item = styled(Paper)(({ theme }) => {
 });
 
 export default function SearchSection() {
+  const router = useRouter();
+
   const [type, setType] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
@@ -77,8 +80,9 @@ export default function SearchSection() {
         p: { md: "3rem", lg: "5rem" },
         // backgroundImage:
         //   "url(https://res.cloudinary.com/dov9kdlci/image/upload/v1708298559/pexels-david-mcbee-1546168_bpplg9.jpg)",
-        backgroundImage: "url(/images/8.jpg)",
-        backgroundPositionY: "50%",
+        backgroundImage: "url(./images/11.jpg)",
+        backgroundSize: "cover",
+        // backgroundPositionY: "50%",
       }}
       width={1}
     >
@@ -90,8 +94,10 @@ export default function SearchSection() {
           textAlign: "center",
         }}
       >
-        <Typography variant={"h3"}>Search for a Property</Typography>
-        <Typography variant="h5" m={"0.5rem 0"}>
+        <Typography variant={"h4"} className={riseFont.className}>
+          Search for a Property
+        </Typography>
+        <Typography variant="h6" m={"0.5rem 0"} className={riseFont.className}>
           Get your preferred properties using the advance search section
         </Typography>
         <Box
@@ -102,12 +108,12 @@ export default function SearchSection() {
           display={"flex"}
           flexDirection={"column"}
           alignItems={"flex-end"}
-          gap={"1.5rem"}
+          gap={"0.5rem"}
         >
           <Grid container spacing={3} maxWidth={"100%"} ml={0}>
             <Grid item md={3}>
               <Item>
-                <FormControl sx={{ minWidth: 120, width: "100%" }}>
+                <FormControl sx={{ minWidth: 120, width: "100%" }} size="small">
                   <InputLabel id="demo-select-small-label">
                     Product Type
                   </InputLabel>
@@ -124,15 +130,15 @@ export default function SearchSection() {
                     </MenuItem>
                     <MenuItem value={"apartment"}>Apartment</MenuItem>
                     <MenuItem value={"villa"}>Villa</MenuItem>
-                    <MenuItem value={"shop"}>Shop</MenuItem>
-                    <MenuItem value={"amenities"}>Amenities</MenuItem>
+                    <MenuItem value={"shop"}>Condominum</MenuItem>
+                    <MenuItem value={"amenities"}>House</MenuItem>
                   </Select>
                 </FormControl>
               </Item>
             </Grid>
             <Grid item md={3}>
               <Item>
-                <FormControl sx={{ minWidth: 120, width: "100%" }}>
+                <FormControl sx={{ minWidth: 120, width: "100%" }} size="small">
                   <InputLabel id="demo-select-small-label">Bedroom</InputLabel>
                   <Select
                     labelId="demo-select-small-label"
@@ -158,7 +164,7 @@ export default function SearchSection() {
             </Grid>
             <Grid item md={3}>
               <Item>
-                <FormControl sx={{ minWidth: 120, width: "100%" }}>
+                <FormControl sx={{ minWidth: 120, width: "100%" }} size="small">
                   <InputLabel id="demo-select-small-label">Bathroom</InputLabel>
                   <Select
                     labelId="demo-select-small-label"
@@ -188,7 +194,9 @@ export default function SearchSection() {
                 fullWidth
                 sx={{ height: "100%" }}
                 endIcon={<Search />}
-                size="large"
+                size="small"
+                color="rise"
+                onClick={() => router.push("/property")}
               >
                 Search
               </Button>
@@ -196,7 +204,7 @@ export default function SearchSection() {
           </Grid>
 
           {moreOptions && (
-            <Grid container spacing={1} maxWidth={"100%"} ml={0} p={"1rem"}>
+            <Grid container spacing={0} maxWidth={"100%"} ml={0} p={"1rem"}>
               {amenityList.map((amenity, index) => (
                 <Grid key={amenity} item md={3} textAlign={"left"}>
                   <FormControlLabel
@@ -204,11 +212,11 @@ export default function SearchSection() {
                       <Checkbox
                         checked={amenities[index]}
                         onChange={() => handleChangeAmenity(index)}
-                        size="large"
+                        size="medium"
                       />
                     }
                     label={amenity}
-                    sx={{ color: "black", fontSize: "1.1rem" }}
+                    sx={{ color: "rise.main", fontSize: "1.1rem" }}
                   />
                 </Grid>
               ))}
@@ -218,6 +226,7 @@ export default function SearchSection() {
             variant={"text"}
             endIcon={!moreOptions ? <Add /> : <Remove />}
             onClick={() => toggleShowMoreOptions()}
+            color="rise"
           >
             {!moreOptions ? "More " : "Less "} Options
           </Button>

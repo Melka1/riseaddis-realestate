@@ -1,3 +1,4 @@
+import { useStore } from "@/Context/store";
 import { Adb } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -15,18 +16,24 @@ import {
 } from "@mui/material";
 
 import { Link } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const pages = [
   { name: "Home", link: "" },
   { name: "Properties", link: "property" },
-  { name: "Gallery", link: "gallery" },
   { name: "Blog", link: "blog" },
-  { name: "Contact", link: "contact" },
-  // { name: "About Us", link: "about-us" },
+  { name: "Contact", link: "#contact-info" },
 ];
 
 function ResponsiveAppBar() {
+  const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
+  console.log(user);
+
+  useEffect(() => {
+    setUser({ name: "John" });
+  }, []);
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -51,8 +58,9 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           <Box
             component={"img"}
-            src="/Logo.svg"
+            src="/images/logo1.png"
             height="30px"
+            p={"5px"}
             sx={{
               // display: { xs: "none", md: "flex" },
               mr: 1,

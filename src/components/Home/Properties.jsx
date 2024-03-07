@@ -8,10 +8,12 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import PropertyListing from "../PropertyListing";
 import Section from "../../containers/section";
 import { Montserrat } from "next/font/google";
+import { useRouter } from "next/router";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
 function Properties() {
+  const router = useRouter();
   return (
     <Section>
       <Typography
@@ -119,32 +121,36 @@ function Properties() {
         // p={"0 3rem"}
       >
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/1.jpg"} />
+          <PropertyListing id={1} imgSrc={"/images/1.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/2.jpg"} />
+          <PropertyListing id={2} imgSrc={"/images/2.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/3.jpg"} />
+          <PropertyListing id={3} imgSrc={"/images/3.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/4.jpg"} />
+          <PropertyListing id={4} imgSrc={"/images/4.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/5.jpg"} />
+          <PropertyListing id={5} imgSrc={"/images/5.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/6.jpg"} />
+          <PropertyListing id={6} imgSrc={"/images/6.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/7.jpg"} />
+          <PropertyListing id={7} imgSrc={"/images/7.jpg"} />
         </Grid>
         <Grid item md={3}>
-          <PropertyListing imgSrc={"/images/8.jpg"} />
+          <PropertyListing id={8} imgSrc={"/images/8.jpg"} />
         </Grid>
       </Grid>
       <Box display={"flex"} justifyContent={"center"} mt={"1.5rem"}>
-        <Button variant="contained" sx={{ p: "0.75rem 2rem" }}>
+        <Button
+          variant="contained"
+          onClick={() => router.push("/property")}
+          sx={{ p: "0.75rem 2rem", bgcolor: "rise.main" }}
+        >
           See More Properties
         </Button>
       </Box>

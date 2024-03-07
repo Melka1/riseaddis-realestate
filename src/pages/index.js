@@ -7,6 +7,8 @@ import SearchSection from "@/components/Home/SearchSection";
 import Properties from "@/components/Home/Properties";
 import EmailSubscription from "@/components/Home/EmailSubscription";
 import Footer from "@/components/Home/Footer";
+import HomeRecentsBlogs from "@/components/Home/HomeRecentBlogs";
+import { Divider } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +26,12 @@ export default function Home() {
       </Head>
       <main>
         <ResponsiveAppBar />
-        <SwipeableTextMobileStepper />
-        <AboutUsSection />
+        {/* <SwipeableTextMobileStepper /> */}
         <SearchSection />
+        <AboutUsSection />
+        <Divider flexItem orientation="horizontal" />
         <Properties />
+        <HomeRecentsBlogs />
         <EmailSubscription />
         <Footer />
       </main>

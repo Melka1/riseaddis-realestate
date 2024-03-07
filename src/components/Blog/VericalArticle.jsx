@@ -1,16 +1,20 @@
 import { ReadMore } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { Montserrat } from "next/font/google";
+import { useRouter } from "next/router";
+import styles from "../styles/verticalBlog.module.css";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
 function VericalArticle({ imgUrl, title, content, date }) {
+  const router = useRouter();
   return (
     <Box
       width={1}
       display={"flex"}
       flexDirection={"column"}
       boxShadow={"0px 0px 2px 0px lightgray"}
+      className={styles.container}
     >
       <Box
         component={"img"}
@@ -48,7 +52,13 @@ function VericalArticle({ imgUrl, title, content, date }) {
           >
             {date}
           </Typography>
-          <Button endIcon={<ReadMore />} size="small" color="rise">
+          <Button
+            onClick={() => router.push(`/blog/${title}`)}
+            endIcon={<ReadMore />}
+            size="small"
+            color="rise"
+            sx={{ p: "0 1.5rem" }}
+          >
             Read More
           </Button>
         </Box>

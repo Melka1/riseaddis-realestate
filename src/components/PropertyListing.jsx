@@ -26,7 +26,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
       // href="http://localhost:3000/property?id=4"
       onClick={() => {
         // openDetail(true);
-        router.push(`?id=${id}`);
+        router.push(`/property?id=${id}`);
       }}
     >
       <Box position={"relative"} overflow={"hidden"}>

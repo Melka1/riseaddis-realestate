@@ -4,7 +4,7 @@ import TrendingArticle from "@/components/Blog/TrendingArticle";
 import EmailSubscription from "@/components/Home/EmailSubscription";
 import Footer from "@/components/Home/Footer";
 import ResponsiveAppBar from "@/components/Home/Menubar";
-import { Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import Head from "next/head";
 
 function Blog() {
@@ -28,6 +28,19 @@ function Blog() {
         }}
       >
         <ResponsiveAppBar />
+        <Box
+          position={"absolute"}
+          top={0}
+          left={0}
+          width={1}
+          height={"100vh"}
+          zIndex={-1}
+          component={"img"}
+          sx={{
+            backgroundImage: "url(/images/image7.png)",
+            backgroundPositionY: "500%",
+          }}
+        ></Box>
         <BlogHeroSection />
         <TrendingArticle />
         <Divider />
