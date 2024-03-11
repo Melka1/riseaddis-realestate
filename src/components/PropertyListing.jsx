@@ -15,7 +15,16 @@ import { useRouter } from "next/router";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
-function PropertyListing({ imgSrc, openDetail, id }) {
+function PropertyListing({
+  imgSrc,
+  id,
+  bedroom,
+  bathroom,
+  area,
+  name,
+  location,
+  count,
+}) {
   const router = useRouter();
   const [like, setLike] = useState(false);
   return (
@@ -23,9 +32,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
       width={1}
       className={styles["property-image"]}
       component={"div"}
-      // href="http://localhost:3000/property?id=4"
       onClick={() => {
-        // openDetail(true);
         router.push(`/property?id=${id}`);
       }}
     >
@@ -34,7 +41,6 @@ function PropertyListing({ imgSrc, openDetail, id }) {
           component={"img"}
           width={1}
           // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298618/pexels-pixabay-534151_hdrhn7.jpg"
-          // src="/images/10.jpg"
           src={imgSrc}
           sx={{ aspectRatio: "16/10" }}
         ></Box>
@@ -98,7 +104,9 @@ function PropertyListing({ imgSrc, openDetail, id }) {
             gap={"0.5rem"}
           >
             <CameraAltSharp fontSize="1rem" />
-            <Typography className={font.className}>7</Typography>
+            <Typography className={font.className}>
+              {count ? count : "7"}
+            </Typography>
           </Box>
         </Box>
       </Box>
@@ -115,6 +123,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
           flexDirection={"row"}
           gap={"1rem"}
           alignItems={"center"}
+          justifyContent={"space-between"}
         >
           <Typography
             className={font.className}
@@ -123,7 +132,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
             fontWeight={"500"}
             letterSpacing={"0.4px"}
           >
-            Luxury Apartments Two Bedroom
+            {name || "Luxury Apartments Two Bedroom"}
           </Typography>
           <IconButton onClick={() => setLike((prev) => !prev)}>
             {!like ? (
@@ -143,13 +152,13 @@ function PropertyListing({ imgSrc, openDetail, id }) {
           <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
             <Bed fontSize={"1rem"} />
             <Typography fontSize={"0.8rem"} className={font.className}>
-              2
+              {bedroom || "2"}
             </Typography>
           </Box>
           <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
             <Bathtub fontSize={"1rem"} />
             <Typography fontSize={"0.8rem"} className={font.className}>
-              1
+              {bathroom || "1"}
             </Typography>
           </Box>
           <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
@@ -159,7 +168,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
               className={font.className}
               position={"relative"}
             >
-              128 m
+              {area || "128"} m
               <span
                 style={{ position: "absolute", top: "0", fontSize: "0.5rem" }}
               >
@@ -172,7 +181,7 @@ function PropertyListing({ imgSrc, openDetail, id }) {
         <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
           <LocationOnSharp fontSize={"1rem"} />
           <Typography fontSize={"0.8rem"} className={font.className}>
-            Edna Mall, Addis Ababa
+            {location || "Edna Mall, Addis Ababa"}
           </Typography>
         </Box>
       </Box>

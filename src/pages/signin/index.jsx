@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Router, useRouter } from "next/router";
+import { useStore } from "@/Context/store";
 
 function Copyright(props) {
   return (
@@ -37,6 +38,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const router = useRouter();
+  const { setUser } = useStore();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -100,7 +102,10 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => router.push("/")}
+              onClick={() => {
+                setUser({ name: "Melka" });
+                router.push("/");
+              }}
             >
               Sign In
             </Button>

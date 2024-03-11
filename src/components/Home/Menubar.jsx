@@ -1,5 +1,5 @@
 import { useStore } from "@/Context/store";
-import { Adb } from "@mui/icons-material";
+import { Adb, Person } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -26,13 +26,12 @@ const pages = [
 ];
 
 function ResponsiveAppBar() {
-  const user = useStore((state) => state.user);
-  const setUser = useStore((state) => state.setUser);
-  console.log(user, "user");
+  const { user, setUser } = useStore();
+  // console.log(user, "user");
 
   useEffect(() => {
-    console.log(user);
-    setUser({ name: "John" });
+    // console.log(user);
+    // setUser({ name: "John" });
   }, []);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -168,11 +167,20 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt="Remy Sharp"
-                  // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1702744271/nipfvy8oooxcvfzozgvb.png"
-                  src="/images/user.png"
-                />
+                {user?.name ? (
+                  <Avatar
+                    alt="Remy Sharp"
+                    // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1702744271/nipfvy8oooxcvfzozgvb.png"
+                    src={"/images/user.png"}
+                  />
+                ) : (
+                  <Avatar
+                    alt="Remy Sharp"
+                    // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1702744271/nipfvy8oooxcvfzozgvb.png"
+                  >
+                    <Person />
+                  </Avatar>
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -221,16 +229,30 @@ function ResponsiveAppBar() {
                   Dashboard
                 </Box>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Box
-                  variant="a"
-                  textAlign="center"
-                  component={"a"}
-                  href="/signin"
-                >
-                  Log out
-                </Box>
-              </MenuItem>
+              {user?.name ? (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Box
+                    variant="a"
+                    textAlign="center"
+                    component={"a"}
+                    // href="/signin"
+                    onClick={() => setUser({})}
+                  >
+                    Log out
+                  </Box>
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Box
+                    variant="a"
+                    textAlign="center"
+                    component={"a"}
+                    href="/signin"
+                  >
+                    Log in
+                  </Box>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>

@@ -13,6 +13,10 @@ const amenityList = [
 
 export const useStore = create((set) => ({
   user: {},
+  property: {},
+  searchList: [],
+  similarHomes: [],
+  nearbyHomes: [],
   searchConditions: {
     type: "",
     bedroom: "",
@@ -21,12 +25,12 @@ export const useStore = create((set) => ({
     amenities: amenityList.map((amenity) => ({ name: amenity, value: false })),
   },
   setUser: (value) => {
-    console.log(value, "store");
     set(() => ({ user: value }));
   },
-
+  setProperty: (value) => {
+    set(() => ({ property: value }));
+  },
   setSearchConditions: (type, value) => {
-    console.log(value, "search", type);
     switch (type) {
       case "type":
         set((state) => ({
@@ -68,5 +72,14 @@ export const useStore = create((set) => ({
         break;
       default:
     }
+  },
+  setSearchList: (value) => {
+    set(() => ({ searchList: value }));
+  },
+  setSimilarHomes: (value) => {
+    set(() => ({ similarHomes: value }));
+  },
+  setNearbyHomes: (value) => {
+    set(() => ({ nearbyHomes: value }));
   },
 }));

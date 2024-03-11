@@ -7,9 +7,13 @@ import PropertyDetail from "@/components/Property/PropertyDetail";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useStore } from "@/Context/store";
+import axios from "axios";
 
 function Property() {
   const router = useRouter();
+  const { property, setProperty, searchList, setSearchList } = useStore();
+  // console.log(property, "property");
 
   const [detail, openDetail] = useState(false);
   console.log(router.query);
@@ -19,15 +23,29 @@ function Property() {
   }
 
   useEffect(() => {
+    var propDetail = document.getElementById("property-detail");
+    if (propDetail) propDetail.scrollTop = 0;
     console.log(router.query);
 
+    if (!detail) {
+      axios.get("http://localhost:3000/api/search").then((res) => {
+        console.log(res.data);
+        setSearchList(res.data);
+      });
+    }
+
     if (router.query?.id) {
+      axios
+        .post("http://localhost:3000/api/property", { id: router.query?.id })
+        .then((res) => {
+          console.log(res.data);
+          setProperty(res.data);
+          // setSearchList([res.data]);
+        });
       openDetail(true);
     } else {
       openDetail(false);
     }
-
-    console.log(detail, "2");
   }, [detail, router.query]);
 
   return (
@@ -51,8 +69,10 @@ function Property() {
       >
         <ResponsiveAppBar />
         <PropertySearchBar />
-        <PropertyBody openDetail={openDetail} />
-        {detail && <PropertyDetail openDetail={openDetail} />}
+        <PropertyBody openDetail={openDetail} properties={searchList} />
+        {detail && (
+          <PropertyDetail openDetail={openDetail} property={property} />
+        )}
       </main>
     </>
   );

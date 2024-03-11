@@ -7,10 +7,10 @@ import { useState } from "react";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
-function PropertyBody({ openDetail }) {
+function PropertyBody({ openDetail, properties }) {
   const [sortType, setSortType] = useState("Home for You");
   const [openSort, setOpenSort] = useState(false);
-
+  // console.log(properties);
   const handleSortType = (type) => {
     setSortType(type);
     setOpenSort(false);
@@ -19,7 +19,7 @@ function PropertyBody({ openDetail }) {
     <Box width={1} display={"flex"} flexGrow={1} flex={1} overflow={"hidden"}>
       <Grid container height={1}>
         <Grid item md={6} height={1}>
-          <Map />
+          <Map type={"main"} />
         </Grid>
         <Grid item md={6} height={1} sx={{ overflow: "hidden scroll" }}>
           <Box p={"1.25rem"}>
@@ -39,7 +39,7 @@ function PropertyBody({ openDetail }) {
                 className={font.className}
                 fontWeight={600}
               >
-                26 results
+                {properties?.length} results
               </Typography>
 
               <Box
@@ -159,62 +159,21 @@ function PropertyBody({ openDetail }) {
             </Box>
           </Box>
           <Grid container>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/7.jpg"}
-                id={1}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/2.jpg"}
-                id={2}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/9.jpg"}
-                id={3}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/1.jpg"}
-                id={1}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/3.jpg"}
-                id={1}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/10.jpg"}
-                id={1}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/5.jpg"}
-                id={1}
-              />
-            </Grid>
-            <Grid item sm={6} p={"1rem"}>
-              <PropertyListing
-                openDetail={openDetail}
-                imgSrc={"/images/6.jpg"}
-                id={1}
-              />
-            </Grid>
+            {properties?.map((property) => (
+              <Grid key={property.id} item sm={6} p={"1rem"}>
+                <PropertyListing
+                  openDetail={openDetail}
+                  imgSrc={property.images[0]}
+                  id={property.id - 1}
+                  name={property.name}
+                  bedroom={property.bedroom}
+                  bathroom={property.bathroom}
+                  area={property.area}
+                  location={property.location}
+                  count={property.images.length}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Grid>
       </Grid>

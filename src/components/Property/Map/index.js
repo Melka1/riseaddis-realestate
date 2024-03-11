@@ -4,6 +4,6 @@ const DynamicMap = dynamic(() => import("./Map"), {
   ssr: false,
 });
 
-export default function Map() {
-  return <DynamicMap />;
+export default function Map({ type }) {
+  return <DynamicMap type={type} />;
 }

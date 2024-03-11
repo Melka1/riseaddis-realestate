@@ -29,19 +29,31 @@ import {
 } from "@mui/material";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Map from "./Map";
 import ForYouCarousel from "./ForYouCarousel";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
+import { useStore } from "@/Context/store";
+import axios from "axios";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
-function PropertyDetail({ openDetail }) {
+function PropertyDetail({ openDetail, property }) {
+  const { nearbyHomes, similarHomes, setNearbyHomes, setSimilarHomes } =
+    useStore();
+  console.log("Property Deatil", similarHomes, nearbyHomes);
   const router = useRouter();
-
+  console.log(property);
   const [saved, setSaved] = useState(false);
   const [openImage, setOpenImage] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/search").then((res) => {
+      console.log(res.data);
+      setNearbyHomes(res.data.slice(0, 5));
+      setSimilarHomes(res.data.splice(5));
+    });
+  }, [openDetail]);
 
   return (
     <Box
@@ -57,6 +69,7 @@ function PropertyDetail({ openDetail }) {
       component={"div"}
     >
       <Box
+        id="property-detail"
         width={"80%"}
         p={"0 1.5rem"}
         minHeight={1}
@@ -165,10 +178,15 @@ function PropertyDetail({ openDetail }) {
                     <Box
                       borderRadius={"1rem 0 0 1rem"}
                       component={"img"}
-                      src={"/images/2.jpg"}
+                      src={
+                        !property?.images
+                          ? "/images/2.jpg"
+                          : property?.images[0]
+                      }
                       width={"100%"}
                       height={"100%"}
                       alt="property"
+                      sx={{ cursor: "pointer" }}
                       onClick={() => setOpenImage(true)}
                     ></Box>
                   </Grid>
@@ -178,44 +196,66 @@ function PropertyDetail({ openDetail }) {
                         <Box
                           component={"img"}
                           onClick={() => setOpenImage(true)}
-                          src={"/images/4.jpg"}
+                          src={
+                            !property?.images
+                              ? "/images/4.jpg"
+                              : property?.images[1]
+                          }
                           width={"100%"}
                           height={"100%"}
                           alt="property"
-                          sx={{ objectFit: "cover" }}
+                          sx={{ objectFit: "cover", cursor: "pointer" }}
                         ></Box>
                       </Grid>
                       <Grid item md={6}>
                         <Box
                           borderRadius={"0 1rem 0 0"}
                           component={"img"}
-                          src={"/images/5.jpg"}
+                          src={
+                            !property?.images
+                              ? "/images/5.jpg"
+                              : property?.images[2]
+                          }
                           width={"100%"}
                           height={"100%"}
                           alt="property"
-                          sx={{ objectFit: "cover" }}
+                          sx={{ objectFit: "cover", cursor: "pointer" }}
                           onClick={() => setOpenImage(true)}
                         ></Box>
                       </Grid>
                       <Grid item md={6}>
                         <Box
                           component={"img"}
-                          src={"/images/6.jpg"}
+                          src={
+                            !property?.images
+                              ? "/images/6.jpg"
+                              : property?.images[3]
+                          }
                           width={"100%"}
                           height={"100%"}
                           alt="property"
-                          sx={{ objectFit: "cover" }}
+                          sx={{
+                            objectFit: "cover",
+                            cursor: "pointer",
+                            "&:hover": {
+                              bgcolor: "white",
+                            },
+                          }}
                           onClick={() => setOpenImage(true)}
                         ></Box>
                       </Grid>
                       <Grid item md={6}>
                         <Box
                           component={"img"}
-                          src={"/images/7.jpg"}
+                          src={
+                            !property?.images
+                              ? "/images/7.jpg"
+                              : property?.images[4]
+                          }
                           width={"100%"}
                           height={"100%"}
                           alt="property"
-                          sx={{ objectFit: "cover" }}
+                          sx={{ objectFit: "cover", cursor: "pointer" }}
                           borderRadius={"0 0 1rem 0"}
                           onClick={() => setOpenImage(true)}
                         ></Box>
@@ -234,7 +274,8 @@ function PropertyDetail({ openDetail }) {
                   variant="contained"
                   onClick={() => setOpenImage(true)}
                 >
-                  See all 28 photos
+                  See all {!property?.images ? "0" : property?.images.length}{" "}
+                  photos
                 </Button>
               </Box>
 
@@ -259,14 +300,15 @@ function PropertyDetail({ openDetail }) {
                           fontWeight={600}
                           className={font.className}
                         >
-                          $950,000
+                          ${property?.price || "300,000"}
                         </Typography>
                         <Typography
                           variant="h4"
                           fontSize={"1.25rem"}
                           className={font.className}
                         >
-                          LOT 26 Majestic Heights Rd, Sturgis, SD 57785
+                          {property?.name + ", " + property?.location ||
+                            "LOT 26 Majestic Heights Rd, Sturgis, SD 57785"}
                         </Typography>
                       </Box>
                       <Box
@@ -280,7 +322,7 @@ function PropertyDetail({ openDetail }) {
                           fontSize={"2rem"}
                           fontWeight={600}
                         >
-                          --
+                          {property?.bedroom || "--"}
                         </Typography>
                         <Typography variant="h4" fontSize={"1.25rem"}>
                           beds
@@ -297,7 +339,7 @@ function PropertyDetail({ openDetail }) {
                           fontSize={"2rem"}
                           fontWeight={600}
                         >
-                          --
+                          {property?.bathroom || "--"}
                         </Typography>
                         <Typography variant="h4" fontSize={"1.25rem"}>
                           baths
@@ -314,7 +356,7 @@ function PropertyDetail({ openDetail }) {
                           fontSize={"2rem"}
                           fontWeight={600}
                         >
-                          95
+                          {property?.area || "--"}
                         </Typography>
                         <Typography variant="h4" fontSize={"1.25rem"}>
                           Acres
@@ -510,9 +552,11 @@ function PropertyDetail({ openDetail }) {
                           Listing updated: 21 hours ago
                         </Typography>
                       </Box>
+
                       <Box m={"1rem 0"} sx={{ aspectRatio: "16/6" }}>
-                        <Map />
+                        <Map type={"property"} />
                       </Box>
+
                       <Box>
                         <Typography
                           fontSize={"1.5rem"}
@@ -908,29 +952,39 @@ function PropertyDetail({ openDetail }) {
                         </Box>
                       </Box>
                       <Divider sx={{ m: "2rem 0" }} />
-                      <Box>
-                        <Typography
-                          fontSize={"1.5rem"}
-                          mb={"1rem"}
-                          fontWeight={700}
-                          className={font.className}
-                        >
-                          Nearby homes
-                        </Typography>
-                        <ForYouCarousel openDetail={openDetail} id={5} />
-                      </Box>
+                      {nearbyHomes.length && (
+                        <Box>
+                          <Typography
+                            fontSize={"1.5rem"}
+                            mb={"1rem"}
+                            fontWeight={700}
+                            className={font.className}
+                          >
+                            Nearby homes
+                          </Typography>
+                          <ForYouCarousel
+                            openDetail={openDetail}
+                            lists={nearbyHomes}
+                          />
+                        </Box>
+                      )}
                       <Divider sx={{ m: "2rem 0" }} />
-                      <Box>
-                        <Typography
-                          fontSize={"1.5rem"}
-                          mb={"1rem"}
-                          fontWeight={700}
-                          className={font.className}
-                        >
-                          Similar homes
-                        </Typography>
-                        <ForYouCarousel openDetail={openDetail} id={2} />
-                      </Box>
+                      {similarHomes.length && (
+                        <Box>
+                          <Typography
+                            fontSize={"1.5rem"}
+                            mb={"1rem"}
+                            fontWeight={700}
+                            className={font.className}
+                          >
+                            Similar homes
+                          </Typography>
+                          <ForYouCarousel
+                            openDetail={openDetail}
+                            lists={similarHomes}
+                          />
+                        </Box>
+                      )}
                       <Divider sx={{ m: "2rem 0" }} />
                     </Box>
                   </Grid>
@@ -963,62 +1017,31 @@ function PropertyDetail({ openDetail }) {
                 <Grid container spacing={4}>
                   <Grid item md={9}>
                     <Grid container spacing={2}>
-                      <Grid item md={12}>
-                        <Box
-                          component={"img"}
-                          src="/images/2.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={6}>
-                        <Box
-                          component={"img"}
-                          src="/images/3.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={6}>
-                        <Box
-                          component={"img"}
-                          src="/images/4.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={12}>
-                        <Box
-                          component={"img"}
-                          src="/images/5.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={6}>
-                        <Box
-                          component={"img"}
-                          src="/images/6.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={6}>
-                        <Box
-                          component={"img"}
-                          src="/images/7.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
-                      <Grid item md={12}>
-                        <Box
-                          component={"img"}
-                          src="/images/11.jpg"
-                          alt="image"
-                          width={1}
-                        />
-                      </Grid>
+                      {property.images.map((image, index) => {
+                        if (index % 3 == 0) {
+                          return (
+                            <Grid item md={12} key={index}>
+                              <Box
+                                component={"img"}
+                                src={image}
+                                alt="image"
+                                width={1}
+                              />
+                            </Grid>
+                          );
+                        } else {
+                          return (
+                            <Grid item md={6} key={index}>
+                              <Box
+                                component={"img"}
+                                src={image}
+                                alt="image"
+                                width={1}
+                              />
+                            </Grid>
+                          );
+                        }
+                      })}
                     </Grid>
                   </Grid>
                   <Grid item md={3}>

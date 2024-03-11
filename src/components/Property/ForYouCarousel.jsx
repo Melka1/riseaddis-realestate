@@ -21,7 +21,7 @@ const responsive = {
   },
 };
 
-function ForYouCarousel({ openDetail, id }) {
+function ForYouCarousel({ openDetail, lists }) {
   return (
     <Carousel
       swipeable={true}
@@ -36,17 +36,22 @@ function ForYouCarousel({ openDetail, id }) {
       removeArrowOnDeviceType={["mobile"]}
       itemClass="carousel-item-padding-40-px"
     >
-      {Array(10)
-        .fill(false)
-        .map((step, index) => (
-          <Box key={index} p={"0 0.5rem"}>
-            <PropertyListing
-              openDetail={openDetail}
-              imgSrc={"/images/1.jpg"}
-              id={id}
-            />
-          </Box>
-        ))}
+      {lists?.map((list, index) => (
+        <Box key={index} p={"0 0.5rem"}>
+          <PropertyListing
+            openDetail={openDetail}
+            imgSrc={list?.images && list.images[0]}
+            count={list?.images && list.images.length}
+            id={list?.id}
+            bedroom={list?.bedroom}
+            bathroom={list?.bathroom}
+            area={list?.area}
+            price={list?.price}
+            name={list?.name}
+            location={list?.location}
+          />
+        </Box>
+      ))}
     </Carousel>
   );
 }
