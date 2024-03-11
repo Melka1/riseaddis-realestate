@@ -15,6 +15,7 @@ function VericalArticle({ imgUrl, title, content, date }) {
       flexDirection={"column"}
       boxShadow={"0px 0px 2px 0px lightgray"}
       className={styles.container}
+      onClick={() => router.push(`/blog/${title}`)}
     >
       <Box
         component={"img"}

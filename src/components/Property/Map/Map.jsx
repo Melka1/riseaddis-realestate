@@ -1,11 +1,5 @@
 import L from "leaflet";
-import {
-  MapContainer,
-  Marker,
-  TileLayer,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -13,6 +7,8 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useState } from "react";
 import { useStore } from "@/Context/store";
+import { Bathtub, Bed, ZoomOutMapSharp } from "@mui/icons-material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -21,27 +17,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow.src,
 });
 
-// function LocationMarker() {
-//   const [position, setPosition] = useState(null);
-//   const map = useMapEvents({
-//     click(e) {
-//       setPosition(e.latlng);
-//     },
-//   });
-
-//   return position === null ? null : (
-//     <Marker position={position}>
-//       <Popup>
-//         {"Lat: " + position.lat}
-//         <br />
-//         {"Lng: " + position.lng}
-//       </Popup>
-//     </Marker>
-//   );
-// }
-
 const Map = ({ type }) => {
-  // const [loc, setLoc] = useState([9.98276372548611, 38.73423775438933]);
   const [prop, setProp] = useState({});
   const [list, setList] = useState([]);
   console.log("Type", type);
@@ -66,22 +42,93 @@ const Map = ({ type }) => {
         list.map((prop) => (
           <Marker key={prop.id} position={[prop.gps?.Lat, prop.gps?.Lng]}>
             <Popup>
-              {"Lat: " + prop.gps?.Lat}
-              <br />
-              {"Lng: " + prop.gps?.Lng}
+              <Grid container flexDirection={"column"} spacing={0.5}>
+                <Grid item md={12} width={1}>
+                  <Box component={"img"} src={prop.images[0]} width={1}></Box>
+                </Grid>
+                <Grid item sm={12}>
+                  <Box display={"flex"} gap={"1rem"}>
+                    <Box display={"flex"}>
+                      <Box display={"flex"}>
+                        <Bed fontSize="8px" />
+                        <Typography fontSize={"10px"} m={"0 !important"}>
+                          {prop.bedroom}
+                        </Typography>
+                      </Box>
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        sx={{ p: "0 0.25rem" }}
+                      />
+                      <Box display={"flex"} gap={"0.25rem"}>
+                        <Bathtub fontSize="8px" />
+                        <Typography fontSize={"10px"} m={"0 !important"}>
+                          {prop.bathroom}
+                        </Typography>
+                      </Box>
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        sx={{ p: "0 0.25rem" }}
+                      />
+                      <Box display={"flex"} gap={"0.25rem"}>
+                        <ZoomOutMapSharp fontSize="8px" />
+                        <Typography fontSize={"10px"} m={"0 !important"}>
+                          {prop.area}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
             </Popup>
           </Marker>
         ))}
       {prop?.name && type == "property" && (
         <Marker key={prop.id} position={[prop.gps?.Lat, prop.gps?.Lng]}>
           <Popup>
-            {"Lat: " + prop.gps?.Lat}
-            <br />
-            {"Lng: " + prop.gps?.Lng}
+            <Grid container flexDirection={"column"} spacing={0.5}>
+              <Grid item md={12} width={1}>
+                <Box component={"img"} src={prop.images[0]} width={1}></Box>
+              </Grid>
+              <Grid item sm={12}>
+                <Box display={"flex"} gap={"1rem"}>
+                  <Box display={"flex"}>
+                    <Box display={"flex"}>
+                      <Bed fontSize="8px" />
+                      <Typography fontSize={"10px"} m={"0 !important"}>
+                        {prop.bedroom}
+                      </Typography>
+                    </Box>
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      sx={{ p: "0 0.25rem" }}
+                    />
+                    <Box display={"flex"} gap={"0.25rem"}>
+                      <Bathtub fontSize="8px" />
+                      <Typography fontSize={"10px"} m={"0 !important"}>
+                        {prop.bathroom}
+                      </Typography>
+                    </Box>
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      sx={{ p: "0 0.25rem" }}
+                    />
+                    <Box display={"flex"} gap={"0.25rem"}>
+                      <ZoomOutMapSharp fontSize="8px" />
+                      <Typography fontSize={"10px"} m={"0 !important"}>
+                        {prop.area}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </Popup>
         </Marker>
       )}
-      {/* <LocationMarker /> */}
     </MapContainer>
   );
 };

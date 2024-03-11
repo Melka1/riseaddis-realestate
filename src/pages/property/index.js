@@ -12,8 +12,8 @@ import axios from "axios";
 
 function Property() {
   const router = useRouter();
-  const { property, setProperty, searchList, setSearchList } = useStore();
-  // console.log(property, "property");
+  const { user, property, setProperty, searchList, setSearchList } = useStore();
+  console.log(user, "property");
 
   const [detail, openDetail] = useState(false);
   console.log(router.query);
@@ -31,6 +31,7 @@ function Property() {
       axios
         .get("https://risesddis-realestate.vercel.app/api/search")
         .then((res) => {
+          //http://localhost:3000
           console.log(res.data);
           setSearchList(res.data);
         });
@@ -71,7 +72,7 @@ function Property() {
           position: "relative",
         }}
       >
-        <ResponsiveAppBar />
+        <ResponsiveAppBar user={user} />
         <PropertySearchBar />
         <PropertyBody openDetail={openDetail} properties={searchList} />
         {detail && (

@@ -134,7 +134,12 @@ function PropertyListing({
           >
             {name || "Luxury Apartments Two Bedroom"}
           </Typography>
-          <IconButton onClick={() => setLike((prev) => !prev)}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setLike((prev) => !prev);
+            }}
+          >
             {!like ? (
               <FavoriteBorderSharp fontSize="medium" />
             ) : (

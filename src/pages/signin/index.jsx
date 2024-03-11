@@ -13,6 +13,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Router, useRouter } from "next/router";
 import { useStore } from "@/Context/store";
+import axios from "axios";
+import { Alert, Snackbar } from "@mui/material";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -39,14 +42,37 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const router = useRouter();
   const { setUser } = useStore();
+  const [state, setState] = useState({
+    message: "",
+    open: false,
+    error: false,
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    axios
+      .post("https://risesddis-realestate.vercel.app/api/auth", {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setState((prev) => ({
+          ...prev,
+          message: res.data.message,
+          open: true,
+          error: res.data.error,
+        }));
+
+        if (!res.data.error) {
+          setUser(res.data.user);
+          router.push("/");
+        }
+      });
+  };
+
+  const handleClose = () => {
+    setState((prev) => ({ ...prev, open: false }));
   };
 
   return (
@@ -103,8 +129,8 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={() => {
-                setUser({ name: "Melka" });
-                router.push("/");
+                // setUser({ name: "Melka" });
+                // router.push("/");
               }}
             >
               Sign In
@@ -125,6 +151,22 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={state.open}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        key={"top" + "right"}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={state.error ? "error" : "success"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {state.message}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }

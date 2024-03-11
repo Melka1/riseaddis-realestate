@@ -9,11 +9,22 @@ import PropertyListing from "../PropertyListing";
 import Section from "../../containers/section";
 import { Montserrat } from "next/font/google";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
 function Properties() {
   const router = useRouter();
+  const [props, setProps] = useState([]);
+  console.log(props, "properties");
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/search").then((res) => {
+      setProps(res.data.slice(0, 8));
+    });
+  }, []);
+
   return (
     <Section>
       <Typography
@@ -114,13 +125,25 @@ function Properties() {
         </Button>
       </Container>
 
-      <Grid
-        container
-        spacing={4}
-        mt={"2rem"}
-        // p={"0 3rem"}
-      >
-        <Grid item md={3}>
+      <Grid container spacing={4} mt={"2rem"}>
+        {props.length > 0 &&
+          props.map((prop) => {
+            return (
+              <Grid key={prop.id} item md={3}>
+                <PropertyListing
+                  id={prop.id}
+                  imgSrc={prop.images[0]}
+                  name={prop.name}
+                  bedroom={prop.bedroom}
+                  bathroom={prop.bathroom}
+                  area={prop.area}
+                  location={prop.location}
+                  count={prop.images.length}
+                />
+              </Grid>
+            );
+          })}
+        {/* <Grid item md={3}>
           <PropertyListing id={1} imgSrc={"/images/1.jpg"} />
         </Grid>
         <Grid item md={3}>
@@ -143,7 +166,7 @@ function Properties() {
         </Grid>
         <Grid item md={3}>
           <PropertyListing id={8} imgSrc={"/images/8.jpg"} />
-        </Grid>
+        </Grid> */}
       </Grid>
       <Box display={"flex"} justifyContent={"center"} mt={"1.5rem"}>
         <Button

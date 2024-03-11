@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const pages = [
   { name: "Home", link: "" },
@@ -27,12 +27,7 @@ const pages = [
 
 function ResponsiveAppBar() {
   const { user, setUser } = useStore();
-  // console.log(user, "user");
-
-  useEffect(() => {
-    // console.log(user);
-    // setUser({ name: "John" });
-  }, []);
+  console.log(user, "user");
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -168,16 +163,9 @@ function ResponsiveAppBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {user?.name ? (
-                  <Avatar
-                    alt="Remy Sharp"
-                    // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1702744271/nipfvy8oooxcvfzozgvb.png"
-                    src={"/images/user.png"}
-                  />
+                  <Avatar alt={user.name} src={user.imgUrl} />
                 ) : (
-                  <Avatar
-                    alt="Remy Sharp"
-                    // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1702744271/nipfvy8oooxcvfzozgvb.png"
-                  >
+                  <Avatar alt="Remy Sharp">
                     <Person />
                   </Avatar>
                 )}
@@ -234,7 +222,7 @@ function ResponsiveAppBar() {
                   <Box
                     variant="a"
                     textAlign="center"
-                    component={"a"}
+                    // component={"a"}
                     // href="/signin"
                     onClick={() => setUser({})}
                   >
