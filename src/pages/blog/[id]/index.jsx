@@ -3,7 +3,6 @@ import RecentArticles from "@/components/Blog/RecentArticles";
 import Footer from "@/components/Home/Footer";
 import ResponsiveAppBar from "@/components/Home/Menubar";
 import {
-  Apple,
   Circle,
   Facebook,
   Google,
@@ -17,7 +16,6 @@ import {
   Divider,
   IconButton,
   List,
-  ListItem,
   ListItemText,
   Typography,
 } from "@mui/material";

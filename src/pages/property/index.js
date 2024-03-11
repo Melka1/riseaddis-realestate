@@ -28,15 +28,19 @@ function Property() {
     console.log(router.query);
 
     if (!detail) {
-      axios.get("http://localhost:3000/api/search").then((res) => {
-        console.log(res.data);
-        setSearchList(res.data);
-      });
+      axios
+        .get("https://risesddis-realestate.vercel.app/api/search")
+        .then((res) => {
+          console.log(res.data);
+          setSearchList(res.data);
+        });
     }
 
     if (router.query?.id) {
       axios
-        .post("http://localhost:3000/api/property", { id: router.query?.id })
+        .post("https://risesddis-realestate.vercel.app/api/property", {
+          id: router.query?.id,
+        })
         .then((res) => {
           console.log(res.data);
           setProperty(res.data);
