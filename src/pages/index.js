@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import ResponsiveAppBar from "@/components/Home/Menubar";
-import SwipeableTextMobileStepper from "@/components/Home/CarouselHero";
 import AboutUsSection from "@/components/Home/AboutUsSection";
 import SearchSection from "@/components/Home/SearchSection";
 import Properties from "@/components/Home/Properties";
@@ -28,7 +27,6 @@ export default function Home() {
       </Head>
       <main>
         <ResponsiveAppBar user={user} />
-        {/* <SwipeableTextMobileStepper /> */}
         <SearchSection />
         <AboutUsSection />
         <Divider flexItem orientation="horizontal" />

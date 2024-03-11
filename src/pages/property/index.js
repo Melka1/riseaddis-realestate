@@ -32,6 +32,7 @@ function Property() {
         .get("https://risesddis-realestate.vercel.app/api/search")
         .then((res) => {
           //http://localhost:3000
+          //https://risesddis-realestate.vercel.app
           console.log(res.data);
           setSearchList(res.data);
         });
@@ -45,7 +46,6 @@ function Property() {
         .then((res) => {
           console.log(res.data);
           setProperty(res.data);
-          // setSearchList([res.data]);
         });
       openDetail(true);
     } else {
