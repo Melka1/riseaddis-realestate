@@ -84,7 +84,7 @@ function RecentArticles() {
           </Grid>
           <Grid item md={4}>
             <VericalArticle
-              imgUrl={"/images/Image3.png"}
+              imgUrl={"/images/image3.png"}
               title={"Invest in Your Future: The Benefits of Homeownership"}
               content={
                 "Owning a home is more than just having a roof over your head; it's an investment in your future financial security and personal well-being. While renting offers flexibility. Owning is way better."

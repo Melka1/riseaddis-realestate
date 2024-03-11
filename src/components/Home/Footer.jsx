@@ -19,7 +19,7 @@ function Footer() {
             gap={"1rem"}
           >
             <Image
-              src={"/images/Logo1.png"}
+              src={"/images/logo1.png"}
               width={96}
               height={96}
               alt="logo"
