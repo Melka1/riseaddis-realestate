@@ -67,7 +67,7 @@ function BlogPage() {
         <Box
           width={"70%"}
           component={"img"}
-          src="/images/image.png"
+          src="/images/Image.png"
           zIndex={1000}
           sx={{ objectFit: "cover", mb: "2rem" }}
         ></Box>
@@ -347,7 +347,7 @@ function BlogPage() {
             >
               <Avatar
                 sx={{ height: "100%", width: "100%" }}
-                src="/images/profile.png"
+                src="/images/Profile.png"
               />
             </Box>
             <Box

@@ -60,7 +60,7 @@ function BlogHeroSection({ date, header, title, name, role, subClass }) {
         {name && (
           <Box display={"flex"} gap={"1rem"}>
             <Avatar
-              src="/images/profile.png"
+              src="/images/Profile.png"
               alt="Rise Addis"
               sx={{ width: 56, height: 56 }}
             />
