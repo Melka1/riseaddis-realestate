@@ -42,7 +42,7 @@ function RecentArticles() {
           </Grid>
           <Grid item md={4}>
             <VericalArticle
-              imgUrl={"/images/Image7.png"}
+              imgUrl={"/images/image7.png"}
               title={"Finding Your Perfect Fit: Search By Lifestyle & Budget"}
               content={
                 "Finding the right place to live is a crucial step in building a fulfilling life. It's not just about the bricks and mortar; it's about finding a space that complements your lifestyle and aligns with your financial goals. "
