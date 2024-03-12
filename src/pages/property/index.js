@@ -60,7 +60,7 @@ function Property() {
           content="The best Realestate Agency to buy appartments"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Logo.png" />
       </Head>
       <main
         style={{
@@ -70,7 +70,7 @@ function Property() {
           position: "relative",
         }}
       >
-        <ResponsiveAppBar user={user} />
+        <ResponsiveAppBar user={user} type={"/property"} />
         <PropertySearchBar />
         <PropertyBody openDetail={openDetail} properties={searchList} />
         {detail && (

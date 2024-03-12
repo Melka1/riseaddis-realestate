@@ -12,6 +12,7 @@ const amenityList = [
 ];
 
 export const useStore = create((set) => ({
+  page: "/",
   user: {},
   property: {},
   searchList: [],
@@ -24,7 +25,11 @@ export const useStore = create((set) => ({
     moreOptions: false,
     amenities: amenityList.map((amenity) => ({ name: amenity, value: false })),
   },
+  setPage: (value) => {
+    set(() => ({ page: value }));
+  },
   setUser: (value) => {
+    console.log("store", value);
     set(() => ({ user: value }));
   },
   setProperty: (value) => {

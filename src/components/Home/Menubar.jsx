@@ -13,11 +13,13 @@ import {
   Tooltip,
   Typography,
   Menu,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import { Link } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const pages = [
   { name: "Home", link: "" },
@@ -26,13 +28,14 @@ const pages = [
   { name: "Contact", link: "#contact-info" },
 ];
 
-function ResponsiveAppBar() {
-  const { user, setUser } = useStore();
+function ResponsiveAppBar({ type }) {
+  const { user, setUser, setPage, page } = useStore();
   const router = useRouter();
-  console.log(user, "user");
+  console.log(user, "user", type, page);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [state, setState] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,6 +51,15 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleClose = () => {
+    setState(false);
+  };
+
+  useEffect(() => {
+    console.log("Menu bar useeffect");
+    setPage(type);
+  }, []);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: "rise.main" }}>
@@ -234,7 +246,10 @@ function ResponsiveAppBar() {
                     textAlign="center"
                     // component={"a"}
                     // href="/signin"
-                    onClick={() => setUser({})}
+                    onClick={() => {
+                      setState(true);
+                      setUser({});
+                    }}
                   >
                     Log out
                   </Box>
@@ -245,7 +260,7 @@ function ResponsiveAppBar() {
                     variant="a"
                     textAlign="center"
                     component={"a"}
-                    href="/signin"
+                    onClick={() => router.push("/signin")}
                   >
                     Log in
                   </Box>
@@ -255,6 +270,22 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={state}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        key={"top" + "right"}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={"success"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Logged out Successfully
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
 }

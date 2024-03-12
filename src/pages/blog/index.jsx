@@ -1,3 +1,4 @@
+import { useStore } from "@/Context/store";
 import BlogHeroSection from "@/components/Blog/HeroSection";
 import RecentArticles from "@/components/Blog/RecentArticles";
 import TrendingArticle from "@/components/Blog/TrendingArticle";
@@ -17,7 +18,7 @@ function Blog() {
           content="The best Realestate Agency to buy appartments"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Logo.png" />
       </Head>
       <main
         style={{
@@ -27,7 +28,7 @@ function Blog() {
           position: "relative",
         }}
       >
-        <ResponsiveAppBar />
+        <ResponsiveAppBar type={"/blog"} />
         <Box
           position={"absolute"}
           top={0}

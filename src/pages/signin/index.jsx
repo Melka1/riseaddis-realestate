@@ -25,7 +25,8 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const router = useRouter();
-  const { setUser } = useStore();
+  const { setUser, page } = useStore();
+  console.log(page);
   const [state, setState] = useState({
     message: "",
     open: false,
@@ -50,7 +51,7 @@ export default function SignIn() {
 
         if (!res.data.error) {
           setUser(res.data.user);
-          router.push("/");
+          router.push(page);
         }
       });
   };
