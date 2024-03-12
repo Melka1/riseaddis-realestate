@@ -29,7 +29,7 @@ function Property() {
 
     if (!detail) {
       axios
-        .get("https://risesddis-realestate.vercel.app/api/search")
+        .get("https://riseaddis-realestate.vercel.app/api/search")
         .then((res) => {
           //http://localhost:3000
           //https://risesddis-realestate.vercel.app
@@ -40,7 +40,7 @@ function Property() {
 
     if (router.query?.id) {
       axios
-        .post("https://risesddis-realestate.vercel.app/api/property", {
+        .post("https://riseaddis-realestate.vercel.app/api/property", {
           id: router.query?.id,
         })
         .then((res) => {
