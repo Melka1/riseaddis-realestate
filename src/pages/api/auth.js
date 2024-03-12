@@ -17,10 +17,11 @@ const users = [
 
 export default function handler(req, res) {
   if (req.method === "POST") {
+    console.log("auth api request");
     const { password, email } = req.body;
 
     if (!password || !email) {
-      res.json({
+      return res.json({
         status: 400,
         message: "Missing required fields",
         error: true,
@@ -30,7 +31,7 @@ export default function handler(req, res) {
     const user = users.find((user) => user.email === email);
 
     if (!user) {
-      res.json({
+      return res.json({
         status: 404,
         message: "User not found, please signup and login",
         error: true,
@@ -38,10 +39,14 @@ export default function handler(req, res) {
     }
 
     if (user.password !== password) {
-      res.json({ status: 401, message: "Invalid credentials", error: true });
+      return res.json({
+        status: 401,
+        message: "Invalid credentials",
+        error: true,
+      });
     }
 
-    res.json({
+    return res.json({
       status: 200,
       message: "Logged in  successfully",
       user: {

@@ -5,6 +5,6 @@ export default function handler(req, res) {
   if (req.method === "GET") {
     const property = data;
     console.log(property);
-    res.status(200).json(property);
+    return res.status(200).json(property);
   }
 }
