@@ -14,10 +14,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Copyright } from "@/components/Auth/copyright";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const router = useRouter();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -113,9 +116,21 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+                <Box onClick={() => router.replace("/signin")}>
+                  Already have an account?{" "}
+                  <Box
+                    sx={{
+                      display: "inline",
+                      cursor: "pointer",
+                      "&:hover": {
+                        textDecoration: "underline !important",
+                        color: "blue",
+                      },
+                    }}
+                  >
+                    Sign In
+                  </Box>
+                </Box>
               </Grid>
             </Grid>
           </Box>

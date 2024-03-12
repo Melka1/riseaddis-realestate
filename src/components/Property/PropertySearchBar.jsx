@@ -1,3 +1,4 @@
+import { useStore } from "@/Context/store";
 import {
   CheckCircle,
   KeyboardArrowDown,
@@ -21,6 +22,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const propertyTypeList = [
@@ -30,6 +32,9 @@ const propertyTypeList = [
 ];
 
 function PropertySearchBar() {
+  const { user } = useStore();
+  const router = useRouter();
+
   const [type, setType] = useState("");
   const [openRange1, setOpenRange1] = useState(false);
   const [openRange2, setOpenRange2] = useState(false);
@@ -678,6 +683,16 @@ function PropertySearchBar() {
       >
         Save Search
       </Button>
+      {user?.name && user.role == "admin" && (
+        <Button
+          variant={"outlined"}
+          color="rise"
+          sx={{ borderColor: "rise.light", ml: "auto" }}
+          onClick={() => router.push("property/add")}
+        >
+          Add Property
+        </Button>
+      )}
     </Box>
   );
 }

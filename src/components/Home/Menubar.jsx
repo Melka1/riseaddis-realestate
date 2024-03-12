@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const pages = [
@@ -27,6 +28,7 @@ const pages = [
 
 function ResponsiveAppBar() {
   const { user, setUser } = useStore();
+  const router = useRouter();
   console.log(user, "user");
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -150,11 +152,18 @@ function ResponsiveAppBar() {
               <Button
                 key={page.name}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, display: "block", color: "white" }}
               >
-                <Link href={`/${page.link}`} underline="none" color={"white"}>
+                <Box
+                  onClick={() => router.push(`/${page.link}`)}
+                  sx={{
+                    "&:hover": {
+                      color: "addisLight.main",
+                    },
+                  }}
+                >
                   {page.name}
-                </Link>
+                </Box>
               </Button>
             ))}
           </Box>
@@ -192,7 +201,8 @@ function ResponsiveAppBar() {
                   variant="a"
                   textAlign="center"
                   component={"a"}
-                  href="/profile"
+                  // href="/profile"
+                  onClick={() => router.push("/profile")}
                 >
                   Profile
                 </Box>

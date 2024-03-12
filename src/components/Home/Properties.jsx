@@ -20,7 +20,7 @@ function Properties() {
   console.log(props, "properties");
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/search").then((res) => {
+    axios.get("../api/search").then((res) => {
       setProps(res.data.slice(0, 8));
     });
   }, []);

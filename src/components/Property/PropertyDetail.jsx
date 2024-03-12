@@ -1051,17 +1051,19 @@ function PropertyDetail({ openDetail, property }) {
                         className={font.className}
                         fontWeight={700}
                       >
-                        $950,000
+                        {property?.price}
                       </Typography>
                       <Typography className={font.className} fontWeight={700}>
-                        95 Acres
+                        {property?.area} Acres
                       </Typography>
                       <Typography
                         className={font.className}
                         fontWeight={400}
                         m={"0.5rem 0 1.5rem 0"}
                       >
-                        LOT 26 Majestic Heights Rd Sturgis, SD 57785
+                        {property?.name}
+                        {", "}
+                        {property?.location}
                       </Typography>
                       <Button fullWidth variant="contained">
                         Contact Agent

@@ -35,7 +35,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put("../api/auth", {
+      .post("../api/auth", {
         email: event.target.email.value,
         password: event.target.password.value,
       })
@@ -122,9 +122,24 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <Box
+                  onClick={() => router.replace("/signup")}
+                  display={"inline"}
+                >
+                  Don&apos;t have an account?{" "}
+                  <Box
+                    sx={{
+                      display: "inline",
+                      cursor: "pointer",
+                      "&:hover": {
+                        textDecoration: "underline !important",
+                        color: "blue",
+                      },
+                    }}
+                  >
+                    Sign Up
+                  </Box>
+                </Box>
               </Grid>
             </Grid>
           </Box>
