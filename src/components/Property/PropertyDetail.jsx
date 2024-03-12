@@ -49,7 +49,7 @@ function PropertyDetail({ openDetail, property }) {
 
   useEffect(() => {
     axios
-      .get("https://risesddis-realestate.vercel.app/api/search")
+      .get("https://riseaddis-realestate.vercel.app/api/search")
       .then((res) => {
         console.log(res.data);
         setNearbyHomes(res.data.slice(0, 5));
