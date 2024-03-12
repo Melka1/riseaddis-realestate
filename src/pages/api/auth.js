@@ -16,7 +16,7 @@ const users = [
 ];
 
 export default function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     const { password, email } = req.body;
 
     if (!password || !email) {
