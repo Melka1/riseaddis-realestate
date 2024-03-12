@@ -35,7 +35,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("https://risesddis-realestate.vercel.app/api/auth", {
+      .post("https://riseaddis-realestate.vercel.app/api/auth", {
         email: event.target.email.value,
         password: event.target.password.value,
       })
