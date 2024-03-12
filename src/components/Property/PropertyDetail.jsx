@@ -48,13 +48,11 @@ function PropertyDetail({ openDetail, property }) {
   const [openImage, setOpenImage] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("https://risesddis-realestate.vercel.app/api/search")
-      .then((res) => {
-        console.log(res.data);
-        setNearbyHomes(res.data.slice(0, 5));
-        setSimilarHomes(res.data.splice(5));
-      });
+    axios.get("../../api/search").then((res) => {
+      console.log(res.data);
+      setNearbyHomes(res.data.slice(0, 5));
+      setSimilarHomes(res.data.splice(5));
+    });
   }, [openDetail]);
 
   return (
