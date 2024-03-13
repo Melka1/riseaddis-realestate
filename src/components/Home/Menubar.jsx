@@ -93,7 +93,7 @@ function ResponsiveAppBar({ type }) {
               textDecoration: "none",
             }}
           >
-            Rise Addis
+            Rise Addis Properties
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
