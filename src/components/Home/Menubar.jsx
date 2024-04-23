@@ -99,8 +99,39 @@ function ResponsiveAppBar({ type }) {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <Toolbar disableGutters>
+          <Box
+            component={"img"}
+            src="/images/logo1.png"
+            height="30px"
+            p={"5px"}
+            sx={{
+              // display: { xs: "none", md: "flex" },
+              mr: 1,
+              aspectRatio: "1",
+              backgroundColor: "white",
+              borderRadius: "0.5rem 0",
+            }}
+          ></Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Rise Addis Properties
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
