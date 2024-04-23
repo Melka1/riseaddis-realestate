@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  ApartmentOutlined,
   Bathtub,
   Bed,
   CameraAltSharp,
@@ -33,15 +34,31 @@ function PropertyListing({
       className={styles["property-image"]}
       component={"div"}
       onClick={() => {
-        router.push(`/property?id=${id}`);
+        // router.push(`/property?id=${id}`);
       }}
     >
-      <Box position={"relative"} overflow={"hidden"}>
+      <Box
+        className={styles["property-image-container"]}
+        position={"relative"}
+        overflow={"hidden"}
+        zIndex={3}
+        border="1px solid transparent"
+      >
         <Box
+          className="front-image"
           component={"img"}
           width={1}
-          // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298618/pexels-pixabay-534151_hdrhn7.jpg"
-          src={imgSrc}
+          src={imgSrc[1]}
+          sx={{ aspectRatio: "16/10" }}
+        ></Box>
+        <Box
+          className="front-image"
+          position={"absolute"}
+          top={0}
+          left={0}
+          component={"img"}
+          width={1}
+          src={imgSrc[0]}
           sx={{ aspectRatio: "16/10" }}
         ></Box>
         <Box
@@ -113,7 +130,7 @@ function PropertyListing({
 
       <Box
         p={"1rem"}
-        bgcolor={"rgba(0,0,0,0.1)"}
+        bgcolor={"action.hover"}
         display={"flex"}
         flexDirection={"column"}
         gap={"0.25rem"}
@@ -147,7 +164,7 @@ function PropertyListing({
             )}
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: "white", m: "0.5rem 0" }} />
+        <Divider sx={{ borderColor: "lightgray", m: "0.5rem 0" }} />
         <Box
           display={"flex"}
           flexDirection={"row"}
@@ -184,9 +201,9 @@ function PropertyListing({
         </Box>
 
         <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
-          <LocationOnSharp fontSize={"1rem"} />
+          <ApartmentOutlined fontSize={"1rem"} />
           <Typography fontSize={"0.8rem"} className={font.className}>
-            {location || "Edna Mall, Addis Ababa"}
+            {location || "Abay Homes Real Estate"}
           </Typography>
         </Box>
       </Box>

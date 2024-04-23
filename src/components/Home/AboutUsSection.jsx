@@ -18,40 +18,40 @@ const Item = styled(Paper)(({ theme }) => ({
 function AboutUsSection() {
   return (
     <Box
-      sx={{ p: { md: "3rem", lg: "5rem" } }}
+      sx={{ p: { xs: "1rem", sm: "3rem", md: "5rem 8rem" } }}
       width={1}
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Stack direction="row" spacing={5} maxWidth={"90%"}>
-        <Item sx={{ width: "150%" }}>
+      <Stack direction="row" spacing={{ sm: 2, md: 5 }}>
+        <Item sx={{ width: "200%" }}>
           <Typography
             component={"h1"}
-            p={1}
+            p={{ xs: "0.25rem 0", md: "0.5rem 0" }}
             fontWeight="600"
             textAlign={"left"}
             className={riseFont.className}
             sx={{
-              fontSize: { md: "1.5rem", lg: "2rem" },
+              fontSize: { xs: "1.2rem", md: "1.5rem", lg: "2rem" },
             }}
           >
             RISE ADDIS PROPERTIES
           </Typography>
           <Typography
             component={"h2"}
-            p={1}
+            p={{ xs: "0.25rem 0", md: "0.5rem 0" }}
             sx={{
-              fontSize: { md: "1.2rem", lg: "1.2rem" },
+              fontSize: { xs: "1rem", sm: "1rem", md: "1.2rem" },
             }}
             className={riseFont.className}
           >
             Luxury apartments - Homes for Sale
           </Typography>
           <Typography
-            p={1}
+            p={{ xs: "0.25rem 0", md: "0.5rem 0" }}
             sx={{
-              fontSize: { md: "1rem", lg: "1rem" },
+              fontSize: { xs: "0.85rem", sm: "0.9rem", md: "1rem" },
             }}
             className={riseFont.className}
           >
@@ -59,10 +59,11 @@ function AboutUsSection() {
             are known for!
           </Typography>
           <Typography
-            p={1}
+            p={{ xs: "0.25rem 0", md: "0.5rem 0" }}
             sx={{
-              fontSize: { md: "0.75rem", lg: "1rem" },
+              fontSize: { xs: "0.85rem", md: "1rem" },
             }}
+            lineHeight={{ sm: "1.2rem" }}
             className={riseFont.className}
           >
             Rise Addis real estate in Ethiopia, raises the bar with our upscale,
@@ -72,19 +73,20 @@ function AboutUsSection() {
           </Typography>
           <Button
             variant="contained"
-            color="success"
-            style={{
+            color="rise"
+            sx={{
               padding: "0.75rem 2rem",
-              marginTop: "1rem",
-              marginLeft: "0.5rem",
+              marginTop: { xs: "0.5rem", md: "1rem" },
+              // marginLeft: { xs: "0.25rem"},
             }}
             endIcon={<ReadMore />}
           >
             Read More
           </Button>
         </Item>
-        <Item sx={{ p: "0" }}>
+        <Item sx={{ p: "0", display: { xs: "none", sm: "block" } }}>
           <Box
+            // display={{ xs: "none", sm: "block" }}
             component={"img"}
             width={1}
             // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298574/pexels-curtis-adams-3288103_owdhcz.jpg"

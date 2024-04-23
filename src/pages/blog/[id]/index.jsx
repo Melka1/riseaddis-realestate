@@ -1,7 +1,9 @@
+import { useStore } from "@/Context/store";
 import BlogHeroSection from "@/components/Blog/HeroSection";
 import RecentArticles from "@/components/Blog/RecentArticles";
 import Footer from "@/components/Home/Footer";
 import ResponsiveAppBar from "@/components/Home/Menubar";
+import TopAddressBar from "@/components/Home/TopAddress";
 import {
   Circle,
   Facebook,
@@ -26,6 +28,7 @@ const font2 = Kufam({ subsets: ["arabic"] });
 const font = Montserrat({ subsets: ["cyrillic"] });
 
 function BlogPage() {
+  const { user } = useStore();
   return (
     <>
       <Head>
@@ -46,7 +49,10 @@ function BlogPage() {
           alignItems: "center",
         }}
       >
-        <ResponsiveAppBar type={"/blog"} />
+        <Box position={"sticky"} top={0} left={0} zIndex={10000} width={1}>
+          <TopAddressBar />
+          <ResponsiveAppBar user={user} type={"/blog"} />
+        </Box>
         <Box
           position={"absolute"}
           top={0}

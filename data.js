@@ -1,8 +1,9 @@
 export const data = [
   {
     id: "1",
-    name: "8540 BUTTERCUP Street",
-    price: "950,000",
+    name: "Dalol Real Estate",
+    project: "Gotera-Kera Area",
+    price: "95,000",
     bedroom: 2,
     bathroom: 2,
     area: 72,
@@ -17,18 +18,11 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "Jacksonville, FL 32210",
-    gps: {
-      Lat: 8.385917975134962,
-      Lng: 38.72174263000489,
-    },
-    createdAt: "",
-    lastChecked: "",
   },
   {
     id: "2",
-
-    name: "211 W Poppyfields Dr",
-    price: "400,000",
+    name: "Abay Homes Real Estate",
+    price: "100,000",
     bedroom: 3,
     bathroom: 2,
     area: 150,
@@ -42,10 +36,6 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "Altadena, CA 91001",
-    gps: {
-      Lat: 9.037811311138201,
-      Lng: 38.76216888427735,
-    },
   },
   {
     id: "3",
@@ -63,10 +53,6 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "San Antonio, TX 78259",
-    gps: {
-      Lat: 9.337811311138201,
-      Lng: 38.76216888427735,
-    },
   },
   {
     id: "4",
@@ -85,10 +71,6 @@ export const data = [
       "/images/2.jpg",
     ],
     location: "Jacksonville, FL 32210",
-    gps: {
-      Lat: 9.037811311138201,
-      Lng: 39.76216888427735,
-    },
   },
   {
     id: "5",
@@ -112,10 +94,6 @@ export const data = [
       "/images/2.jpg",
     ],
     location: "Hesperia, CA 92345",
-    gps: {
-      Lat: 9.526705701082706,
-      Lng: 38.83306503295899,
-    },
   },
   {
     id: "6",
@@ -135,10 +113,6 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "San Antonio, TX 78258",
-    gps: {
-      Lat: 9.137811311138201,
-      Lng: 39.76216888427735,
-    },
   },
   {
     id: "7",
@@ -157,10 +131,6 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "Chandler, AZ 85226",
-    gps: {
-      Lat: 9.037811311138201,
-      Lng: 37.76216888427735,
-    },
   },
   {
     id: "8",
@@ -180,10 +150,6 @@ export const data = [
       "/images/3.jpg",
     ],
     location: "Austin, TX 78741",
-    gps: {
-      Lat: 9.037811311138201,
-      Lng: 38.76216888427735,
-    },
   },
   {
     id: "9",
@@ -201,10 +167,6 @@ export const data = [
       "/images/6.jpg",
     ],
     location: "San Antonio, TX 78259",
-    gps: {
-      Lat: 9.337811311138201,
-      Lng: 38.76216888427735,
-    },
   },
   {
     id: "10",
@@ -223,9 +185,5 @@ export const data = [
       "/images/2.jpg",
     ],
     location: "Jacksonville, FL 32210",
-    gps: {
-      Lat: 9.037811311138201,
-      Lng: 39.76216888427735,
-    },
   },
 ];

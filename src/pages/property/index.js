@@ -29,8 +29,6 @@ function Property() {
 
     if (!detail) {
       axios.get("../api/search").then((res) => {
-        //http://localhost:3000
-        //https://risesddis-realestate.vercel.app
         console.log(res.data);
         setSearchList(res.data);
       });

@@ -5,7 +5,7 @@ import HorizontalArticle from "../Blog/HorizontalArticle";
 function HomeRecentsBlogs() {
   return (
     <Box
-      p={"6rem"}
+      p={{ xs: "1rem", sm: "6rem" }}
       pt={0}
       width={1}
       display={"flex"}
@@ -13,7 +13,7 @@ function HomeRecentsBlogs() {
       justifyContent={"center"}
       flexDirection={"column"}
       bgcolor={"white"}
-      gap={"4rem"}
+      gap={{ xs: "1rem", sm: "4rem" }}
     >
       <Typography
         variant="h3"
@@ -21,7 +21,7 @@ function HomeRecentsBlogs() {
         fontWeight={"bold"}
         color={"#3e3d39"}
         className={riseFont.className}
-        fontSize={"3rem"}
+        fontSize={{ xs: "1.5rem", sm: "3rem" }}
         letterSpacing={"0.4px"}
       >
         Recent Articles

@@ -3,16 +3,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Montserrat } from "next/font/google";
 
 export const riseFont = Montserrat({ subsets: ["cyrillic"] });
-// import { Montserrat } from "next/font/google";
-
-// const font = Montserrat({ subsets: ["cyrillic"] });
 
 let theme = createTheme({
-  // Theme customization goes here as usual, including tonalOffset and/or
-  // contrastThreshold as the augmentColor() function relies on these
+  palette: {
+    mode: "light",
+  },
 });
 
-theme = createTheme({
+export let lTheme = createTheme(theme, {
   palette: {
     rise: theme.palette.augmentColor({
       color: {
@@ -38,12 +36,21 @@ theme = createTheme({
       },
       name: "addisLight",
     }),
+    darkHover: "#5d5c5740",
+    lightHover: "#5d5c5715",
+    background: {
+      lighter: "#ffffffbb",
+    },
+    text: {
+      contrast: "#000000dd",
+    },
   },
 });
 
 export default function App({ Component, pageProps }) {
+  // console.log(lTheme);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lTheme}>
       <Component {...pageProps} />
     </ThemeProvider>
   );

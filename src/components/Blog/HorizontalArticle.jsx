@@ -9,7 +9,7 @@ const font = Montserrat({ subsets: ["cyrillic"] });
 function HorizontalArticle({ title, content, date, type, imgUrl, left }) {
   const router = useRouter();
   return (
-    <Box maxWidth={"80%"}>
+    <Box maxWidth={{ xs: "100%", sm: "80%" }}>
       <Grid container spacing={4} flexDirection={left && "row-reverse"}>
         <Grid item md={5}>
           <Box
@@ -30,11 +30,19 @@ function HorizontalArticle({ title, content, date, type, imgUrl, left }) {
             justifyContent={"space-between"}
           >
             <Box display={"flex"} gap={"0.5rem"}>
-              <Typography color={"addis.main"} className={font.className}>
+              <Typography
+                color={"addis.main"}
+                className={font.className}
+                fontSize={{ xs: "0.9rem", sm: "1rem" }}
+              >
                 {date}
               </Typography>
               <Divider orientation="vertical" flexItem />
-              <Typography color={"addis.main"} className={font.className}>
+              <Typography
+                color={"addis.main"}
+                className={font.className}
+                fontSize={{ xs: "0.9rem", sm: "1rem" }}
+              >
                 {type}
               </Typography>
             </Box>
@@ -42,12 +50,16 @@ function HorizontalArticle({ title, content, date, type, imgUrl, left }) {
               color={"rise.main"}
               fontWeight={600}
               variant="h2"
-              fontSize={"2rem"}
+              fontSize={{ xs: "1.2rem", sm: "2rem" }}
               className={font.className}
             >
               {title}
             </Typography>
-            <Typography color={"rise.light"} fontWeight={500} fontSize={"1rem"}>
+            <Typography
+              color={"rise.light"}
+              fontWeight={500}
+              fontSize={{ xs: "0.85rem", sm: "1.2rem" }}
+            >
               {content}
             </Typography>
             <Button
@@ -56,7 +68,7 @@ function HorizontalArticle({ title, content, date, type, imgUrl, left }) {
               color="addisLight"
               onClick={() => router.push(`/blog/${title}`)}
               endIcon={<ReadMore />}
-              sx={{ p: "1rem 3rem", color: "addis" }}
+              sx={{ p: "1rem 3rem", color: "addis", width: { xs: "100%" } }}
             >
               View More
             </Button>

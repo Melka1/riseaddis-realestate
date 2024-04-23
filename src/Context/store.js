@@ -15,6 +15,7 @@ export const useStore = create((set) => ({
   page: "/",
   user: {},
   property: {},
+  project: {},
   searchList: [],
   similarHomes: [],
   nearbyHomes: [],
@@ -34,6 +35,9 @@ export const useStore = create((set) => ({
   },
   setProperty: (value) => {
     set(() => ({ property: value }));
+  },
+  setProject: (value) => {
+    set(() => ({ project: value }));
   },
   setSearchConditions: (type, value) => {
     switch (type) {

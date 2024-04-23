@@ -3,9 +3,8 @@ const { parse } = require("url");
 const next = require("next");
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname =
-  process.env.NODE_ENV !== "production" ? "localhost" : "riseaddis.com";
-const port = process.env.PORT || 8080;
+const hostname = "riseaddis.com";
+const port = 8080;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();

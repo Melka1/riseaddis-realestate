@@ -1,0 +1,109 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String   @unique
+  name    String
+  role Role
+}
+
+model Unit {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  bathroom Int
+  bedroom Int
+  balcony Boolean
+  images String[]
+  netArea Float
+  commonArea Float
+  totalArea Float
+  payments Payment[]
+  available Int
+
+  apartment Apartment @relation(fields: [apartmentId], references: [id])
+  apartmentId String @db.ObjectId
+
+  status Status @default(draft)
+}
+
+model Apartment {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  images String[]
+  amenities Amenity[] 
+
+  units Unit[]
+  site    Site   @relation(fields: [siteId], references: [id])
+  siteId String @db.ObjectId
+
+  status Status @default(draft)
+} 
+
+model Site {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String?
+  location String?
+  footPrintArea Float?
+  builtUpArea Float?
+  floors Int?
+  basementCount Int?
+  parkingLots Int?
+  oneBedrooms Int?
+  twoBedrooms Int?
+  threeBedrooms Int?
+  images String[] @default([])
+  stage Stage?
+
+  apartments Apartment[]
+  
+  realEstate RealEstate @relation(fields: [realEstateId], references: [id])
+  realEstateId String @db.ObjectId
+  
+  status Status @default(draft)
+}
+
+model RealEstate {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  images String[]
+
+  sites Site[]
+
+  status Status @default(draft)
+}
+
+model Amenity {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  image String
+
+  apartment Apartment @relation(fields: [apartmentId], references: [id])
+  apartmentId String @db.ObjectId
+}
+
+type Payment {
+  name String
+  value Int
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  draft
+  active
+  inactive
+}
+
+enum Stage {
+  under_construction
+  finished
+}

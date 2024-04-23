@@ -6,3 +6,17 @@
   transform: scale(1.05);
   transition: 0.5s ease-in-out;
 }
+
+.property-image-container {
+  z-index: 3;
+}
+
+.property-image-container:hover {
+  border-color: lightgray;
+}
+
+.property-image-container:hover img:nth-of-type(2n) {
+  opacity: 0;
+  transition: 0.5s ease-in-out;
+  border-color: black;
+}

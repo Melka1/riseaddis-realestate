@@ -5,6 +5,7 @@ import TrendingArticle from "@/components/Blog/TrendingArticle";
 import EmailSubscription from "@/components/Home/EmailSubscription";
 import Footer from "@/components/Home/Footer";
 import ResponsiveAppBar from "@/components/Home/Menubar";
+import TopAddressBar from "@/components/Home/TopAddress";
 import { Box, Divider } from "@mui/material";
 import Head from "next/head";
 
@@ -28,6 +29,7 @@ function Blog() {
           position: "relative",
         }}
       >
+        <TopAddressBar />
         <ResponsiveAppBar type={"/blog"} />
         <Box
           position={"absolute"}

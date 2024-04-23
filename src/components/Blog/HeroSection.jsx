@@ -18,7 +18,6 @@ function BlogHeroSection({ date, header, title, name, role, subClass }) {
       margin={"auto"}
     >
       <Box
-        // bgcolor={"white"}
         width={"70%"}
         flexDirection={"column"}
         display={"flex"}
@@ -28,7 +27,7 @@ function BlogHeroSection({ date, header, title, name, role, subClass }) {
         <Box
           display={"flex"}
           p={"0.5rem 1rem"}
-          maxWidth={"40%"}
+          maxWidth={"50%"}
           gap={"0.5rem"}
           borderRadius={"0.5rem"}
           sx={{
@@ -40,7 +39,12 @@ function BlogHeroSection({ date, header, title, name, role, subClass }) {
           <House />
           {date && (
             <>
-              <Typography className={font.className}>{date}</Typography>
+              <Typography
+                className={font.className}
+                sx={{ textWrap: "nowrap" }}
+              >
+                {date}
+              </Typography>
               <Divider orientation="vertical" flexItem />
             </>
           )}
