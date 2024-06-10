@@ -63,7 +63,7 @@ function AboutUsSection() {
             sx={{
               fontSize: { xs: "0.85rem", md: "1rem" },
             }}
-            lineHeight={{ sm: "1.2rem" }}
+            lineHeight={{ sm: "1.2rem", md: "1.5" }}
             className={riseFont.className}
           >
             Rise Addis real estate in Ethiopia, raises the bar with our upscale,
@@ -77,7 +77,6 @@ function AboutUsSection() {
             sx={{
               padding: "0.75rem 2rem",
               marginTop: { xs: "0.5rem", md: "1rem" },
-              // marginLeft: { xs: "0.25rem"},
             }}
             endIcon={<ReadMore />}
           >
@@ -86,11 +85,9 @@ function AboutUsSection() {
         </Item>
         <Item sx={{ p: "0", display: { xs: "none", sm: "block" } }}>
           <Box
-            // display={{ xs: "none", sm: "block" }}
             component={"img"}
             width={1}
-            // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298574/pexels-curtis-adams-3288103_owdhcz.jpg"
-            src="/images/5.jpg"
+            src="https://res.cloudinary.com/dchmblw88/image/upload/v1716270876/photo_2024-05-21_08-53-54_btnxnm.jpg"
             sx={{ objectFit: "cover", height: "100%" }}
           ></Box>
         </Item>

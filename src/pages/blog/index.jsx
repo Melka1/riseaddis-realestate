@@ -1,4 +1,4 @@
-import { useStore } from "@/Context/store";
+import { useStore } from "@/stores/userStore";
 import BlogHeroSection from "@/components/Blog/HeroSection";
 import RecentArticles from "@/components/Blog/RecentArticles";
 import TrendingArticle from "@/components/Blog/TrendingArticle";
@@ -8,51 +8,69 @@ import ResponsiveAppBar from "@/components/Home/Menubar";
 import TopAddressBar from "@/components/Home/TopAddress";
 import { Box, Divider } from "@mui/material";
 import Head from "next/head";
+import NavBar from "@/components/Home/NavBar";
+import WhatsappContainer from "@/components/whatsappContainer";
+import ContactUsContainer from "@/components/ContactUsContainer";
+import axios from "axios";
+import { backEndUrls } from "..";
 
-function Blog() {
+function Blog({ realEstates }) {
   return (
     <>
       <Head>
-        <title>Rise Addis Realestate</title>
+        <title>Rise Addis Properties</title>
         <meta
           name="description"
-          content="The best Realestate Agency to buy appartments"
+          content="The best and affordable real-estate in ethiopia"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/Logo.png" />
       </Head>
-      <main
-        style={{
-          minheight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-        }}
-      >
-        <TopAddressBar />
-        <ResponsiveAppBar type={"/blog"} />
+      <main style={{ position: "relative" }}>
+        <NavBar page={"/blog"} realEstates={realEstates} />
         <Box
-          position={"absolute"}
-          top={0}
-          left={0}
-          width={1}
-          height={"100vh"}
-          zIndex={-1}
-          component={"img"}
-          sx={{
-            backgroundImage: "url(/images/image7.png)",
-            backgroundPositionY: "500%",
-          }}
-        ></Box>
-        <BlogHeroSection />
-        <TrendingArticle />
+          position={"relative"}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+        >
+          <Box
+            position={"absolute"}
+            top={0}
+            left={0}
+            width={1}
+            zIndex={-1}
+            component={"img"}
+            sx={{
+              backgroundImage: "url(/images/image7.png)",
+              aspectRatio: "1",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></Box>
+          <BlogHeroSection />
+          <TrendingArticle />
+        </Box>
         <Divider />
         <RecentArticles />
         <EmailSubscription />
-        <Footer />
+        <Footer realEstates={realEstates} />
+        <WhatsappContainer />
+        <ContactUsContainer />
       </main>
     </>
   );
 }
 
 export default Blog;
+
+export async function getStaticProps() {
+  const realestatesResponse = await axios.get(
+    `${backEndUrls.vercel}realestate`
+  );
+  return {
+    props: {
+      realEstates: realestatesResponse.data.realEstates,
+    },
+  };
+}

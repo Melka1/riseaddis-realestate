@@ -6,7 +6,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useState } from "react";
-import { useStore } from "@/Context/store";
+import { useStore } from "@/stores/userStore";
 import { Bathtub, Bed, ZoomOutMapSharp } from "@mui/icons-material";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 

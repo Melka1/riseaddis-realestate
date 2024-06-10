@@ -1,9 +1,8 @@
-import { SelfImprovement } from "@mui/icons-material";
 import { Box, Grid, Typography } from "@mui/material";
 
-function ListItem({ width, icon, name }) {
+function ListItem({ width, imageUrl, name }) {
   return (
-    <Grid item xs={6} md={width?.md || 4}>
+    <Grid item xs={6} sm={4} md={width?.md || 4}>
       <Box
         height={1}
         p={{ xs: "0.5rem", md: "1rem" }}
@@ -16,12 +15,8 @@ function ListItem({ width, icon, name }) {
         gap={"0.5rem"}
         color={"rise.light"}
       >
-        <Box display={{ xs: "none", md: "block" }}>
-          {icon || <SelfImprovement />}
-        </Box>
-        <Typography fontSize={{ xs: "0.8rem", md: "1rem" }}>
-          {name || "Calm living environment"}
-        </Typography>
+        <Box component={"img"} width={"20px"} height={"20px"} src={imageUrl} />
+        <Typography fontSize={{ xs: "0.8rem", md: "1rem" }}>{name}</Typography>
       </Box>
     </Grid>
   );

@@ -5,7 +5,7 @@ import { riseFont } from "@/pages/_app";
 function RecentArticles() {
   return (
     <Box
-      p={"6rem"}
+      p={{ xs: "1rem", sm: "3rem", md: "6rem" }}
       width={1}
       display={"flex"}
       alignItems={"center"}
@@ -13,7 +13,7 @@ function RecentArticles() {
     >
       <Box
         display={"flex"}
-        maxWidth={"80%"}
+        maxWidth={{ sm: "100%", md: "80%" }}
         width={1}
         flexDirection={"column"}
         gap={"3rem"}
@@ -24,13 +24,13 @@ function RecentArticles() {
           fontWeight={"bold"}
           color={"#3e3d39"}
           className={riseFont.className}
-          fontSize={"3rem"}
+          fontSize={{ xs: "2rem", sm: "3rem" }}
           letterSpacing={"0.4px"}
         >
           Recent Articles
         </Typography>
         <Grid container spacing={4}>
-          <Grid item md={4}>
+          <Grid item sm={12} md={4}>
             <VericalArticle
               imgUrl={"/images/Image1.png"}
               title={"Top Neighborhoods for Young Professionals in Addis Ababa"}
@@ -40,7 +40,7 @@ function RecentArticles() {
               date={"February 6, 2024"}
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item sm={6} md={4}>
             <VericalArticle
               imgUrl={"/images/image7.png"}
               title={"Finding Your Perfect Fit: Search By Lifestyle & Budget"}
@@ -50,7 +50,7 @@ function RecentArticles() {
               date={"February 1, 2024"}
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item sm={6} md={4}>
             <VericalArticle
               imgUrl={"/images/Image2.png"}
               title={"Unlocking Your Dream Home: Tips for First-Time Buyers"}
@@ -60,7 +60,7 @@ function RecentArticles() {
               date={"January 21, 2024"}
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item sm={6} md={4}>
             <VericalArticle
               imgUrl={"/images/Image4.png"}
               title={"House Hunting Made Easy: Search by Lifestyle & Budget "}
@@ -70,7 +70,7 @@ function RecentArticles() {
               date={"August 9, 2023"}
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item sm={6} md={4}>
             <VericalArticle
               imgUrl={"/images/Image5.png"}
               title={
@@ -82,7 +82,7 @@ function RecentArticles() {
               date={"July 24, 2023"}
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item sm={6} md={4}>
             <VericalArticle
               imgUrl={"/images/Image3.png"}
               title={"Invest in Your Future: The Benefits of Homeownership"}

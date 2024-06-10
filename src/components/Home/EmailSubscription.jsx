@@ -20,7 +20,7 @@ function EmailSubscription() {
     >
       <Box
         sx={{
-          maxWidth: "600px",
+          maxWidth: { xs: "85%", sm: "600px" },
           display: "flex",
           flexDirection: "column",
           margin: { xs: "auto", md: "unset" },

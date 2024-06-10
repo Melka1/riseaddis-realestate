@@ -8,6 +8,6 @@ export const Item = styled(Paper)(({ theme }) => {
     color: theme.palette.text.secondary,
     width: "100%",
     boxShadow: "none",
-    borderRadius: "1rem",
+    // borderRadius: "1rem",
   };
 });

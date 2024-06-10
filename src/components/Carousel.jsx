@@ -2,6 +2,7 @@ import Carousel from "react-multi-carousel";
 import carouselBreakPoints from "@/data/responsive";
 import "react-multi-carousel/lib/styles.css";
 import { Box, Button } from "@mui/material";
+import styles from "../styles/Home.module.css";
 
 const CustomButtonList = ({ next, previous, goToSlide, ...rest }) => {
   const {
@@ -58,7 +59,7 @@ function CarouselContainer({
       infinite={infinite || false}
       autoPlay={autoplay || false}
       autoPlaySpeed={speed || 3000}
-      customTransition="all 0.5s"
+      customTransition={`all 0.5s ease-in-out`}
       transitionDuration={500}
       containerClass="carousel-container"
       removeArrowOnDeviceType={

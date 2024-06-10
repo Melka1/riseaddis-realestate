@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -6,6 +7,7 @@ import {
   Container,
   FormControlLabel,
   Grid,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -13,13 +15,25 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Copyright } from "@/components/Auth/copyright";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { backEndUrls } from "..";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useState } from "react";
+import { useStore } from "@/stores/userStore";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const {setUser} = useStore()
+  const { setToken } = useTokenStore();
   const router = useRouter();
+
+  const [snackBar, setSnackBar] = useState({
+    type: false,
+    message: "Hello World!",
+    open: false,
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,7 +41,36 @@ export default function SignUp() {
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
     });
+
+    axios
+      .post(`${backEndUrls.local}auth/register`, {
+        email: data.get("email"),
+        password: data.get("password"),
+        name: data.get("firstName") + data.get("lastName"),
+      })
+      .then(({ data }) => {
+        setSnackBar({
+          type: false,
+          message: data.message,
+          open: true,
+        });
+
+        setToken(data.token);
+        setUser(data.user);
+        router.push("/");
+      })
+      .catch((err) => {
+        setSnackBar({
+          type: true,
+          message:
+            err?.response?.data?.message ||
+            "Something went wrong, please try again!",
+          open: true,
+        });
+      });
   };
 
   return (
@@ -40,6 +83,8 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            position: "relative",
+            bgcolor: "rgba(255,255,255,0.8)",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -134,9 +179,34 @@ export default function SignUp() {
               </Grid>
             </Grid>
           </Box>
+          <Box
+            position={"absolute"}
+            width={"300px"}
+            sx={{ aspectRatio: 1, top: "calc(50% - 150px)" }}
+            component={"img"}
+            src="/Logo.png"
+            alt={"Logo"}
+            zIndex={-1}
+          />
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={snackBar?.open}
+        onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
+        autoHideDuration={3000}
+        key={"top" + "right"}
+      >
+        <Alert
+          onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
+          severity={snackBar.type ? "error" : "success"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackBar.message}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }

@@ -1,24 +1,22 @@
 import { Box, Grid, Link, Typography } from "@mui/material";
 import Section from "../../containers/section";
-import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import { useRouter } from "next/router";
-import {
-  Facebook,
-  Google,
-  Instagram,
-  WhatsApp,
-  YouTube,
-} from "@mui/icons-material";
-import { BiLogoTiktok } from "react-icons/bi";
+
+import { Fragment } from "react";
+import MeterSquared from "../MeterSquared";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
-function Footer() {
+function Footer({ realEstates }) {
   const router = useRouter();
   return (
     <Section type={"footer"}>
-      <Grid container spacing={{ xs: 4, sm: 2, md: 12, lg: 6, xl: 8 }}>
+      <Grid
+        mb={{ xs: "1rem", sm: "0" }}
+        container
+        spacing={{ xs: 4, sm: 2, md: 12, lg: 6, xl: 8 }}
+      >
         <Grid item xs={12} md={4} lg={3.5} xl={4}>
           <Box
             component={"a"}
@@ -44,7 +42,6 @@ function Footer() {
             >
               RISE ADDIS{" "}
               <Box
-                // variant="h3"
                 component={"p"}
                 fontSize={{ xs: "1.2rem", sm: "1.5rem" }}
                 className={font.className}
@@ -70,154 +67,104 @@ function Footer() {
               flexDirection={{ xs: "column", md: "column" }}
               gap={1}
             >
-              <Box
-                component={"a"}
-                href={`/real-estate/abay-homes-real-estate/gotera-kera-area`}
-                sx={{ cursor: "pointer" }}
-                onClick={() =>
-                  router.push(
-                    `/real-estate/abay-homes-real-estate/gotera-kera-area`
-                  )
-                }
-              >
-                <Grid container spacing={{ md: 2 }}>
-                  <Grid item xs={3} sm={4}>
-                    <Box
-                      component={"img"}
-                      // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298524/pexels-alex-staudinger-1732414_ofhsux.jpg"
-                      src="/images/1.jpg"
-                      sx={{ aspectRatio: "1" }}
-                      width={1}
-                      overflow={"hidden"}
-                      borderRadius={"0.25rem"}
-                    ></Box>
-                  </Grid>
-                  <Grid item xs={9} sm={8}>
-                    <Box
-                      display={"flex"}
-                      flexDirection={"column"}
-                      gap={"0.25rem"}
-                      p={"0.5rem"}
-                      height={1}
-                    >
-                      <Typography
-                        className={font.className}
-                        fontWeight={"700"}
-                        color={"#3a3a3c"}
-                        sx={{
-                          fontSize: {
-                            xs: "0.75rem",
-                            sm: "1.1rem",
-                            lg: "1.1rem",
-                          },
-                        }}
-                      >
-                        Dalol real estate
-                      </Typography>
-                      <Typography
-                        className={font.className}
-                        fontWeight={"500"}
-                        color={"#3a3a3c"}
-                        sx={{
-                          fontSize: {
-                            xs: "0.75rem",
-                            sm: "0.875rem",
-                            lg: "1rem",
-                          },
-                        }}
-                      >
-                        Gotera-Kera project
-                      </Typography>
-                      <Typography
-                        className={font.className}
-                        fontWeight={"700"}
-                        fontSize={{
-                          xs: "1rem",
-                          md: "1.375rem",
-                          lg: "1.1rem",
-                        }}
-                        mt={"auto"}
-                        color={"#3a3a3cbf"}
-                      >
-                        $ 90,000/sqms
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Box
-                component={"a"}
-                href={`/real-estate/abay-homes-real-estate/gotera-kera-area`}
-                sx={{ cursor: "pointer" }}
-                onClick={() => router.push(`/property?id=5`)}
-              >
-                <Grid container spacing={{ md: 2 }}>
-                  <Grid item xs={3} sm={4}>
-                    <Box
-                      component={"img"}
-                      height={1}
-                      // src="https://res.cloudinary.com/dov9kdlci/image/upload/v1708298537/pexels-expect-best-323780_ly7hmi.jpg"
-                      src="/images/8.jpg"
-                      sx={{ aspectRatio: "1" }}
-                      width={1}
-                      overflow={"hidden"}
-                      borderRadius={"0.25rem"}
-                    ></Box>
-                  </Grid>
-                  <Grid item xs={9} sm={8}>
-                    <Box
-                      display={"flex"}
-                      flexDirection={"column"}
-                      gap={"0.25rem"}
-                      p={"0.5rem"}
-                      height={1}
-                    >
-                      <Typography
-                        className={font.className}
-                        fontWeight={"700"}
-                        color={"#3a3a3c"}
-                        sx={{
-                          fontSize: {
-                            xs: "0.75rem",
-                            sm: "1.1rem",
-                            // lg: "1.2rem",
-                            xl: "1.1rem",
-                          },
-                        }}
-                      >
-                        Abay Homes realestate
-                      </Typography>
-                      <Typography
-                        className={font.className}
-                        fontWeight={"500"}
-                        color={"#3a3a3c"}
-                        sx={{
-                          fontSize: {
-                            xs: "0.75rem",
-                            sm: "0.875rem",
-                            md: "1rem",
-                          },
-                        }}
-                      >
-                        Piassa-arada project
-                      </Typography>
-                      <Typography
-                        className={font.className}
-                        fontWeight={"700"}
-                        fontSize={{
-                          xs: "1rem",
-                          md: "1.375rem",
-                          lg: "1.1rem",
-                        }}
-                        mt={"auto"}
-                        color={"#3a3a3abf"}
-                      >
-                        $ 110,000/sqms
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
+              {realEstates.slice(0, 2).map((realEstate, index) => {
+                if (!realEstate.sites[0]?.name)
+                  return <Fragment key={index}></Fragment>;
+                return (
+                  <Box
+                    key={index}
+                    component={"a"}
+                    href={`/real-estate/${realEstate.link}/${realEstate.sites[0].link}`}
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { bgcolor: "action.hover" },
+                    }}
+                  >
+                    <Grid container spacing={{ md: 2 }}>
+                      <Grid item xs={3} sm={4}>
+                        <Box
+                          component={"img"}
+                          src={realEstate.images[0]}
+                          sx={{ aspectRatio: "1", objectFit: "cover" }}
+                          width={1}
+                          overflow={"hidden"}
+                          borderRadius={"0.25rem"}
+                        ></Box>
+                      </Grid>
+                      <Grid item xs={9} sm={8}>
+                        <Box
+                          display={"flex"}
+                          flexDirection={"column"}
+                          gap={"0.25rem"}
+                          p={"0.5rem"}
+                          height={1}
+                        >
+                          <Typography
+                            className={font.className}
+                            fontWeight={"700"}
+                            color={"#3a3a3c"}
+                            sx={{
+                              fontSize: {
+                                xs: "0.75rem",
+                                sm: "1.1rem",
+                                lg: "1.1rem",
+                              },
+                            }}
+                          >
+                            {realEstate.name}
+                          </Typography>
+                          <Typography
+                            className={font.className}
+                            fontWeight={"500"}
+                            color={"#3a3a3c"}
+                            sx={{
+                              fontSize: {
+                                xs: "0.75rem",
+                                sm: "0.875rem",
+                                lg: "1rem",
+                              },
+                            }}
+                          >
+                            {realEstate.sites[0].name}
+                          </Typography>
+                          {realEstate.sites[0]?.price ? (
+                            <Typography
+                              title="price per square meter"
+                              className={font.className}
+                              fontWeight={"700"}
+                              fontSize={{
+                                xs: "1rem",
+                                md: "1.375rem",
+                                lg: "1.1rem",
+                              }}
+                              mt={"auto"}
+                              color={"#3a3a3cbf"}
+                            >
+                              ETB {realEstate.sites[0]?.price}/
+                              <MeterSquared />
+                            </Typography>
+                          ) : (
+                            <Typography
+                              title="location"
+                              className={font.className}
+                              fontWeight={"700"}
+                              fontSize={{
+                                xs: "1rem",
+                                md: "1.375rem",
+                                lg: "1.1rem",
+                              }}
+                              mt={"auto"}
+                              color={"#3a3a3cbf"}
+                            >
+                              {realEstate.sites[0]?.location}
+                            </Typography>
+                          )}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                );
+              })}
             </Box>
           </Box>
         </Grid>
@@ -236,19 +183,33 @@ function Footer() {
             >
               Contact Info
             </Typography>
-            <Typography
-              className={font.className}
-              fontWeight={"500"}
-              color={"#3a3a3c"}
-              fontSize={{ xs: "0.85rem", sm: "1rem" }}
-              textAlign={{ xs: "center", md: "left" }}
-            >
-              Bole, Shoa Dabo, Rayumma mall 5th floor 503
-            </Typography>
             <Box
               display={"flex"}
               gap={"0.5rem"}
-              fontSize={{ xs: "0.85rem", sm: "1rem" }}
+              fontSize={{ xs: "0.85rem", sm: "0.9rem" }}
+            >
+              <Typography
+                className={font.className}
+                fontWeight={"500"}
+                color={"#3a3a3cbf"}
+                fontSize={"inherit"}
+              >
+                Location:
+              </Typography>
+              <Typography
+                className={font.className}
+                fontWeight={"500"}
+                color={"#3a3a3c"}
+                fontSize={{ xs: "0.85rem", sm: "0.9rem" }}
+                textAlign={{ xs: "center", md: "left" }}
+              >
+                Bole, Shoa Dabo, Rayumma mall 5th floor 503
+              </Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              gap={"0.5rem"}
+              fontSize={{ xs: "0.85rem", sm: "0.9rem" }}
             >
               <Typography
                 className={font.className}
@@ -263,13 +224,27 @@ function Footer() {
                 color={"#3a3a3c"}
                 fontSize={"inherit"}
               >
-                +251 91 938 5608
+                0931044444
+              </Typography>
+              <Typography
+                className={font.className}
+                color={"#3a3a3c"}
+                fontSize={"inherit"}
+              >
+                or
+              </Typography>
+              <Typography
+                className={font.className}
+                color={"#3a3a3c"}
+                fontSize={"inherit"}
+              >
+                0931115566
               </Typography>
             </Box>
             <Box
               display={"flex"}
               gap={"0.5rem"}
-              fontSize={{ xs: "0.85rem", sm: "1rem" }}
+              fontSize={{ xs: "0.85rem", sm: "0.9rem" }}
             >
               <Typography
                 className={font.className}
@@ -284,13 +259,13 @@ function Footer() {
                 color={"#3a3a3c"}
                 fontSize={"inherit"}
               >
-                riseaddisproperties@gmail.com
+                riseaddis1@gmail.com
               </Typography>
             </Box>
             <Box
               display={"flex"}
               gap={"0.5rem"}
-              fontSize={{ xs: "0.85rem", sm: "1rem" }}
+              fontSize={{ xs: "0.85rem", sm: "0.9rem" }}
             >
               <Typography
                 className={font.className}
@@ -340,7 +315,7 @@ function Footer() {
                 />
               </Link>
               <Link
-                href="#youtube"
+                href="http://www.youtube.com/@RiseAddisProperties"
                 color={"rise.main"}
                 sx={{ "&:hover": { color: "addis.dark" }, display: "flex" }}
               >
@@ -364,7 +339,7 @@ function Footer() {
                 />
               </Link>
               <Link
-                href="#google"
+                href="mailto:riseaddis1@gmail.com"
                 color={"rise.main"}
                 sx={{ "&:hover": { color: "addis.dark" }, display: "flex" }}
               >
@@ -374,7 +349,7 @@ function Footer() {
                   width={25}
                   height={25}
                 />
-              </Link>{" "}
+              </Link>
             </Box>
           </Box>
         </Grid>

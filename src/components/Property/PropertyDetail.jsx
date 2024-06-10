@@ -33,7 +33,7 @@ import { useEffect, useState } from "react";
 import Map from "./Map";
 import ForYouCarousel from "./ForYouCarousel";
 import { useRouter } from "next/router";
-import { useStore } from "@/Context/store";
+import { useStore } from "@/stores/userStore";
 import axios from "axios";
 
 const font = Montserrat({ subsets: ["cyrillic"] });

@@ -7,7 +7,7 @@ const carouselBreakPoints = {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1280 },
-      items: 1.5,
+      items: 1,
       slidesToSlide: 1,
     },
     tablet: {

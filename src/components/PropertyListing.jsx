@@ -6,7 +6,6 @@ import {
   CameraAltSharp,
   FavoriteBorderSharp,
   FavoriteSharp,
-  LocationOnSharp,
   ZoomOutMapSharp,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
@@ -25,6 +24,7 @@ function PropertyListing({
   name,
   location,
   count,
+  available,
 }) {
   const router = useRouter();
   const [like, setLike] = useState(false);
@@ -34,7 +34,7 @@ function PropertyListing({
       className={styles["property-image"]}
       component={"div"}
       onClick={() => {
-        // router.push(`/property?id=${id}`);
+        router.push(`/real-estate/abay-homes-real-estate/gotera-kera-area`);
       }}
     >
       <Box
@@ -69,7 +69,7 @@ function PropertyListing({
           top={0}
           justifyContent={"space-between"}
         >
-          <Typography
+          {/* <Typography
             sx={{
               bgcolor: "gray",
               color: "white",
@@ -79,7 +79,7 @@ function PropertyListing({
             }}
           >
             Featured
-          </Typography>
+          </Typography> */}
           <Box display={"flex"} flexDirection={"row"} gap={"1rem"}>
             <Typography
               sx={{
@@ -94,14 +94,14 @@ function PropertyListing({
             </Typography>
             <Typography
               sx={{
-                bgcolor: "gray",
+                bgcolor: available > 0 ? "gray" : "red",
                 color: "white",
                 p: "0.15rem 0.35rem",
                 borderRadius: "0.25rem",
                 fontSize: "0.75rem",
               }}
             >
-              Available
+              {available > 0 ? "Available" : "Sold out"}
             </Typography>
           </Box>
         </Box>
@@ -149,7 +149,7 @@ function PropertyListing({
             fontWeight={"500"}
             letterSpacing={"0.4px"}
           >
-            {name || "Luxury Apartments Two Bedroom"}
+            {name || "Name of site here"}
           </Typography>
           <IconButton
             onClick={(e) => {
@@ -203,7 +203,7 @@ function PropertyListing({
         <Box display={"flex"} flexDirection={"row"} gap={"0.5rem"}>
           <ApartmentOutlined fontSize={"1rem"} />
           <Typography fontSize={"0.8rem"} className={font.className}>
-            {location || "Abay Homes Real Estate"}
+            {location || "Name of real-estate here"}
           </Typography>
         </Box>
       </Box>

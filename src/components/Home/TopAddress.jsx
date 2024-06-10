@@ -1,39 +1,28 @@
-import {
-  Facebook,
-  Google,
-  Instagram,
-  LocationOn,
-  Phone,
-  WhatsApp,
-  YouTube,
-} from "@mui/icons-material";
+import { LocationOn, Phone } from "@mui/icons-material";
 import { Box, Link, Typography } from "@mui/material";
 import { Montserrat } from "next/font/google";
-import { BiLogoTiktok } from "react-icons/bi";
 
 const font = Montserrat({ subsets: ["cyrillic"] });
 
 function TopAddressBar() {
   return (
     <Box
-      // position="sticky"
-      // mb={"100%"}
-      // top={0}
-      // left={0}
       width={1}
       zIndex={1}
       minHeight={30}
-      bgcolor={"riseLight.light"}
+      bgcolor={"riseLight.main"}
       display={"flex"}
       alignItems={"center"}
-      p={{ xs: "0.5rem 1rem", sm: "0.5rem 3rem", md: "0.75rem 6rem" }}
+      p={{ xs: "0.5rem 1rem", sm: "1rem 3rem", md: "1rem 6rem" }}
+      borderBottom={"1px solid lightgray"}
       justifyContent={"space-between"}
       fontSize={"0.8rem"}
     >
-      <Box display={"flex"} gap={{ xs: "0.5rem", md: "1rem" }}>
+      <Box display={"flex"} gap={{ xs: "1rem", md: "1rem" }}>
         <Link
           href="https://www.facebook.com/Luxuryhomeinaddis"
           color={"rise.main"}
+          target="_blank"
           sx={{
             "&:hover": { transform: "scale(1.05)" },
             display: "flex",
@@ -47,7 +36,8 @@ function TopAddressBar() {
           />
         </Link>
         <Link
-          href="#youtube"
+          href="https://www.youtube.com/@RiseAddisProperties"
+          target="_blank"
           color={"rise.main"}
           sx={{ "&:hover": { transform: "scale(1.05)" }, display: "flex" }}
         >
@@ -59,6 +49,7 @@ function TopAddressBar() {
           />
         </Link>
         <Link
+          target="_blank"
           href="https://www.tiktok.com/@rise_addis_property"
           color={"rise.main"}
           sx={{ "&:hover": { transform: "scale(1.05)" }, display: "flex" }}
@@ -72,6 +63,7 @@ function TopAddressBar() {
         </Link>
         <Link
           href="https://www.instagram.com/rise_addis_property"
+          target="_blank"
           color={"rise.main"}
           sx={{ "&:hover": { transform: "scale(1.05)" }, display: "flex" }}
         >
@@ -83,7 +75,8 @@ function TopAddressBar() {
           />
         </Link>
         <Link
-          href="#google"
+          href="mailto:riseaddis1@gmail.com"
+          target="_blank"
           color={"rise.main"}
           sx={{ "&:hover": { transform: "scale(1.05)" }, display: "flex" }}
         >
@@ -136,23 +129,22 @@ function TopAddressBar() {
           </Typography>
         </Box>
         <Link
-          href="tel:+251921739456"
+          href="tel:+251931044444"
           underline={"none"}
           color={"inherit"}
           className={font.className}
           fontSize={{ xs: "0.75rem", sm: "0.8rem" }}
         >
-          +251 92 173 9456
+          0931044444
         </Link>
         <Link
-          // display={{ xs: "none", sm: "inline" }}
-          href="tel:+251919385608"
+          href="tel:+251931115566"
           underline={"none"}
           color={"inherit"}
           className={font.className}
           fontSize={{ xs: "0.75rem", sm: "0.8rem" }}
         >
-          +251 91 938 5608
+          0931115566
         </Link>
       </Box>
     </Box>

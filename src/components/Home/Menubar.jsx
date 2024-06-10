@@ -1,4 +1,4 @@
-import { useStore } from "@/Context/store";
+import { useStore } from "@/stores/userStore";
 import { riseFont } from "@/pages/_app";
 import { Person } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,50 +16,37 @@ import {
   Menu,
   Snackbar,
   Alert,
+  Link,
 } from "@mui/material";
 
-import { Link } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import AnimatedLink from "../AnimatedLink";
+import AnimatedHeader from "../AnimatedHeader";
+import { useTokenStore } from "@/stores/tokenStore";
 
 const pages = [
-  { name: "Home", link: "" },
-  // { name: "Properties", link: "property" },
-  {
-    name: "Projects",
-    link: "real-estate",
-    subList: [
-      { name: "Noah Realestate", link: "real-estate/noah-real-estate" },
-      {
-        name: "Abay Homes Realestate",
-        link: "real-estate/abay-homes-real-estate",
-      },
-      { name: "Dalol Realestate", link: "/real-estate/dalol-real-estate" },
-      { name: "Tsehay Realestate", link: "/real-estate/tsehay-real-estate" },
-    ],
-  },
   {
     name: "News & Articles",
     link: "blog",
     subList: [
       {
-        name: "Top 3 destination in Addis Ababa",
-        link: "blog/top-3-destination-in-addis-ababa",
+        name: "What's New?",
+        link: "blog/what-is-new",
       },
       {
-        name: "5 ways to decorate your house",
-        link: "blog/5-ways-to-decorate-your-house",
+        name: "Real-estate in Ethiopia",
+        link: "blog/real-estate-in-ethiopia",
       },
-      { name: "How to invest safely", link: "blog/how-to-invest-safely" },
     ],
   },
-  { name: "Contact Us", link: "#contact-info" },
+  { name: "Contact Us", link: "contact-us" },
 ];
 
-function ResponsiveAppBar({ type }) {
+function ResponsiveAppBar({ type, handleOpenSlidingMenu, realEstates }) {
   const { user, setUser, setPage, page } = useStore();
+  const { setToken, token } = useTokenStore();
   const router = useRouter();
-  // console.log(user, "user", type, page);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -85,7 +72,6 @@ function ResponsiveAppBar({ type }) {
   };
 
   useEffect(() => {
-    // console.log("Menu bar useeffect");
     setPage(type);
   }, []);
 
@@ -93,114 +79,47 @@ function ResponsiveAppBar({ type }) {
     <AppBar
       position="relative"
       sx={{
-        background: (theme) =>
-          `linear-gradient(90deg,${theme.palette.addis.dark}, ${theme.palette.addis.light},${theme.palette.addis.dark})`,
+        bgcolor: "riseLight.main",
+        boxShadow: "none",
         p: { xs: "0.5rem 0.5rem", md: "0.5rem 4rem" },
       }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
-            component={"img"}
-            src="/images/logo1.png"
-            height="30px"
-            p={"5px"}
             sx={{
-              // display: { xs: "none", md: "flex" },
-              mr: 1,
-              aspectRatio: "1",
-              backgroundColor: "white",
-              borderRadius: "0.5rem 0",
-            }}
-          ></Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              flexGrow: { xs: 0, md: 1 },
+              display: { xs: "flex", md: "none" },
             }}
           >
-            Rise Addis Properties
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+              onClick={handleOpenSlidingMenu}
+              color="rise.main"
             >
               <MenuIcon sx={{ display: { xs: "flex", md: "none" } }} />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "flex", md: "none" },
-                flexDirection: "column",
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.name} dense divider>
-                  <Box
-                    position={"relative"}
-                    onClick={() => router.push(`/${page.link}`)}
-                    sx={{
-                      "&:hover": {
-                        color: "addisLight.main",
-                      },
-                      "&:hover::after": {
-                        width: "100%",
-                      },
-                      "&::after": {
-                        position: "absolute",
-                        content: "''",
-                        width: 0,
-                        height: " 2px",
-                        left: 0,
-                        bottom: "-5px",
-                        backgroundColor: "addisLight.main",
-                        transition: "width ease-in-out 0.3s",
-                      },
-                    }}
-                  >
-                    {page.name}
-                  </Box>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
-          <Box display={"flex"} alignItems={"center"} component={"a"} href="/">
+
+          <Box
+            title="Rise Addis Properties"
+            display={"flex"}
+            alignItems={"center"}
+            component={"a"}
+            href="/"
+          >
             <Box
               component={"img"}
               src="/images/logo1.png"
-              height={{ xs: "30px", sm: "40px" }}
+              height={{ xs: "35px", sm: "50px" }}
               p={"5px"}
+              mr={"auto"}
               sx={{
-                mr: 1,
+                mr: "auto",
                 aspectRatio: "1",
-                // backgroundColor: "white",
                 borderRadius: { xs: "50%", sm: "0.5rem 0" },
               }}
             ></Box>
@@ -209,10 +128,9 @@ function ResponsiveAppBar({ type }) {
               variant="h6"
               noWrap
               className={riseFont.className}
-              fontSize={{ xs: "0.8rem", sm: "1rem", md: "1.2rem" }}
+              fontSize={{ xs: "0.8rem", sm: "1rem", md: "1.3rem" }}
               sx={{
                 mr: 2,
-                // fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".1rem",
                 color: "rise.dark",
@@ -230,6 +148,100 @@ function ResponsiveAppBar({ type }) {
               justifyContent: "center",
             }}
           >
+            <Button
+              key={page.name}
+              onClick={handleCloseNavMenu}
+              sx={{
+                my: 2,
+                display: "block",
+                color: "white",
+                position: "relative",
+                "&:hover .sublist": {
+                  display: "block",
+                },
+                "&:hover .list::after": {
+                  width: "100%",
+                },
+              }}
+            >
+              <Box
+                position={"relative"}
+                className="list"
+                component={"a"}
+                color="addisLight.dark"
+                onClick={() => router.push(`/`)}
+                sx={{
+                  fontWeight: "bold",
+                  "&:hover": {
+                    color: "addisLight.main",
+                  },
+                  "&::after": {
+                    position: "absolute",
+                    content: "''",
+                    width: 0,
+                    height: " 2px",
+                    left: 0,
+                    bottom: "-5px",
+                    backgroundColor: "addisLight.main",
+                    transition: "width ease-in-out 0.3s",
+                  },
+                }}
+              >
+                Home
+              </Box>
+            </Button>
+
+            <Button
+              title="real-estates"
+              key={page.name}
+              onClick={handleCloseNavMenu}
+              sx={{
+                my: 2,
+                display: "block",
+                color: "white",
+                position: "relative",
+                "&:hover .sublist": {
+                  display: "block",
+                },
+                "&:hover .list::after": {
+                  width: "100%",
+                },
+              }}
+            >
+              <AnimatedHeader url={"/real-estate"} name={"Projects"} />
+              {realEstates.length > 0 && (
+                <Box
+                  className="sublist"
+                  display={"none"}
+                  position="absolute"
+                  left={0}
+                  top={"100%"}
+                  pt={"1rem"}
+                >
+                  <Box
+                    display={"flex"}
+                    flexDirection={"column"}
+                    p={"1rem"}
+                    borderRadius={"0.5rem"}
+                    bgcolor={"background.paper"}
+                    border={"1px solid lightgray"}
+                    sx={{ minWidth: "calc(100% + 2rem)" }}
+                    gap={2}
+                  >
+                    {realEstates.map((realestate, index) => {
+                      return (
+                        <AnimatedLink
+                          key={index}
+                          name={realestate.name}
+                          url={`/real-estate/${realestate.link}`}
+                        />
+                      );
+                    })}
+                  </Box>
+                </Box>
+              )}
+            </Button>
+
             {pages.map((page) => (
               <Button
                 key={page.name}
@@ -247,31 +259,7 @@ function ResponsiveAppBar({ type }) {
                   },
                 }}
               >
-                <Box
-                  position={"relative"}
-                  className="list"
-                  component={"a"}
-                  href={`/${page.link}`}
-                  onClick={() => router.push(`/${page.link}`)}
-                  sx={{
-                    fontWeight: "bold",
-                    "&:hover": {
-                      color: "addisLight.main",
-                    },
-                    "&::after": {
-                      position: "absolute",
-                      content: "''",
-                      width: 0,
-                      height: " 2px",
-                      left: 0,
-                      bottom: "-5px",
-                      backgroundColor: "addisLight.main",
-                      transition: "width ease-in-out 0.3s",
-                    },
-                  }}
-                >
-                  {page.name}
-                </Box>
+                <AnimatedHeader url={page.link} name={page.name} />
                 {page?.subList?.length && (
                   <Box
                     className="sublist"
@@ -284,43 +272,19 @@ function ResponsiveAppBar({ type }) {
                     <Box
                       display={"flex"}
                       flexDirection={"column"}
-                      py={"0.5rem"}
+                      p={"1rem 1rem"}
                       borderRadius={"0.5rem"}
                       bgcolor={"background.paper"}
                       border={"1px solid lightgray"}
+                      gap={2}
                       sx={{ minWidth: "calc(100% + 2rem)" }}
                     >
-                      {page.subList.map((realestate) => (
-                        <Button
-                          href={`/${realestate.link}`}
-                          color="rise"
-                          key={realestate.name}
-                          onClick={() => router.push(`/${realestate.link}`)}
-                          sx={{
-                            textWrap: "nowrap",
-                            textTransform: "capitalize",
-                            justifyContent: "flex-start",
-                            transition: "all 0.3s",
-                            "&:hover::after": {
-                              width: "calc(100% - 2rem)",
-                            },
-                            "&:hover": {
-                              transform: "translateX(10px)",
-                            },
-                            "&::after": {
-                              position: "absolute",
-                              content: "''",
-                              width: 0,
-                              height: " 2px",
-                              left: 0,
-                              bottom: "-5px",
-                              backgroundColor: "addisLight.main",
-                              transition: "width ease-in-out 0.3s",
-                            },
-                          }}
-                        >
-                          {realestate.name}
-                        </Button>
+                      {page.subList.map((realestate, index) => (
+                        <AnimatedLink
+                          key={index}
+                          name={realestate.name}
+                          url={realestate.link}
+                        />
                       ))}
                     </Box>
                   </Box>
@@ -329,8 +293,11 @@ function ResponsiveAppBar({ type }) {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+          <Box
+            display={{ xs: "none", md: "block" }}
+            sx={{ flexGrow: 0, zIndex: 10000 }}
+          >
+            <Tooltip sx={{ zIndex: 10001 }}>
               <IconButton
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, bgcolor: "transparent" }}
@@ -358,7 +325,7 @@ function ResponsiveAppBar({ type }) {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "45px", zIndex: 100000000 }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -393,24 +360,27 @@ function ResponsiveAppBar({ type }) {
                   Account
                 </Box>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu} dense>
-                <Box
-                  variant="a"
-                  textAlign="center"
-                  component={"a"}
-                  href="/dashboard"
-                >
-                  Dashboard
-                </Box>
-              </MenuItem>
-              {user?.name ? (
+              {user?.role == "admin" && (
+                <MenuItem onClick={handleCloseUserMenu} dense>
+                  <Box
+                    variant="a"
+                    textAlign="center"
+                    component={"a"}
+                    href="/dashboard"
+                  >
+                    Dashboard
+                  </Box>
+                </MenuItem>
+              )}
+              {token ? (
                 <MenuItem onClick={handleCloseUserMenu} dense>
                   <Box
                     variant="a"
                     textAlign="center"
                     onClick={() => {
                       setState(true);
-                      setUser({});
+                      setUser(null);
+                      setToken(null);
                     }}
                   >
                     Log out

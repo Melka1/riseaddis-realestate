@@ -1,4 +1,4 @@
-import { useStore } from "@/Context/store";
+import { useStore } from "@/stores/userStore";
 import {
   CheckCircle,
   KeyboardArrowDown,

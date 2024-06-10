@@ -1,9 +1,10 @@
 import { Divider, Stack, Typography } from "@mui/material";
 import { Kufam } from "next/font/google";
+import MeterSquared from "../MeterSquared";
 
 const kufam = Kufam({ subsets: ["arabic"] });
 
-function ProjectDescList({ name, value, type }) {
+function ProjectDescList({ name, value, type, area }) {
   return (
     <Stack
       direction={"row"}
@@ -41,11 +42,11 @@ function ProjectDescList({ name, value, type }) {
             ? { xs: "0.7rem", md: "0.9rem" }
             : { xs: "0.9rem", md: "1.1rem" }
         }
-        flex={2}
+        flex={3}
         textAlign={"left"}
-        noWrap
       >
         {value || "Enter desc value here"}
+        {area && <MeterSquared fontSize={"0.6rem"} gap />}
       </Typography>
     </Stack>
   );

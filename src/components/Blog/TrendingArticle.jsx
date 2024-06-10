@@ -4,7 +4,7 @@ import HorizontalArticle from "./HorizontalArticle";
 function TrendingArticle() {
   return (
     <Box
-      p={"6rem"}
+      p={{ xs: "1rem", sm: "2rem", md: "6rem" }}
       width={1}
       display={"flex"}
       alignItems={"center"}

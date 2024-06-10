@@ -1,7 +1,6 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/router";
-import { useStore } from "@/Context/store";
 import axios from "axios";
 import {
   Alert,
@@ -13,51 +12,61 @@ import {
   CssBaseline,
   FormControlLabel,
   Grid,
+  Link,
   Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { Copyright } from "@/components/Auth/copyright";
-import Link from "next/link";
+import { backEndUrls } from "..";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useState } from "react";
+import { useStore } from "@/stores/userStore";
+import Loading from "@/components/Loading";
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const router = useRouter();
-  const { setUser, page } = useStore();
-  console.log(page);
-  const [state, setState] = useState({
-    message: "",
+  const { setUser } = useStore();
+  const { setToken } = useTokenStore();
+  const [loading, setLoading] = useState(false);
+  const [snackBar, setSnackBar] = useState({
+    type: false,
+    message: "Hello World!",
     open: false,
-    error: false,
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     axios
-      .post("../api/auth", {
+      .post(`${backEndUrls.local}auth/login`, {
         email: event.target.email.value,
         password: event.target.password.value,
       })
-      .then((res) => {
-        console.log(res.data);
-        setState((prev) => ({
-          ...prev,
-          message: res.data.message,
+      .then(({ data }) => {
+        setSnackBar({
+          type: false,
+          message: data.message,
           open: true,
-          error: res.data.error,
-        }));
+        });
 
-        if (!res.data.error) {
-          setUser(res.data.user);
-          router.push(page);
-        }
+        setToken(data.token);
+        setUser(data.user);
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setSnackBar({
+          type: true,
+          message:
+            err?.response?.data?.message ||
+            "Something went wrong, please try again!",
+          open: true,
+        });
+        setLoading(false);
       });
-  };
-
-  const handleClose = () => {
-    setState((prev) => ({ ...prev, open: false }));
   };
 
   return (
@@ -70,6 +79,8 @@ export default function SignIn() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            position: "relative",
+            bgcolor: "rgba(255,255,255,0.8)",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -118,7 +129,11 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  sx={{ fontSize: { xs: "0.85rem", sm: "1rem" } }}
+                >
                   Forgot password?
                 </Link>
               </Grid>
@@ -126,6 +141,7 @@ export default function SignIn() {
                 <Box
                   onClick={() => router.replace("/signup")}
                   display={"inline"}
+                  fontSize={{ xs: "0.85rem", sm: "1rem" }}
                 >
                   Don&apos;t have an account?{" "}
                   <Box
@@ -144,23 +160,34 @@ export default function SignIn() {
               </Grid>
             </Grid>
           </Box>
+          <Box
+            position={"absolute"}
+            width={"300px"}
+            sx={{ aspectRatio: 1, top: "calc(50% - 150px)" }}
+            component={"img"}
+            src="/Logo.png"
+            alt={"Logo"}
+            zIndex={-1}
+          />
         </Box>
+        {loading && <Loading />}
+
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={state.open}
-        onClose={handleClose}
+        open={snackBar?.open}
+        onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
         autoHideDuration={3000}
         key={"top" + "right"}
       >
         <Alert
-          onClose={handleClose}
-          severity={state.error ? "error" : "success"}
+          onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
+          severity={snackBar.type ? "error" : "success"}
           variant="filled"
           sx={{ width: "100%" }}
         >
-          {state.message}
+          {snackBar.message}
         </Alert>
       </Snackbar>
     </ThemeProvider>
