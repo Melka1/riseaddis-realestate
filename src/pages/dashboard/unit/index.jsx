@@ -1,67 +1,25 @@
-import AddUnitComponent from "@/components/Dashboard/Unit/AddUnitComponent";
-import UnitListPreviewComponent from "@/components/Dashboard/Unit/UnitListPreviewComponent";
-import Loading from "@/components/Loading";
-import AdminPageLayout from "@/layouts/adminPageLayout";
-import { backEndUrls } from "@/pages";
-import { useDashboardStore } from "@/stores/dashboardStore";
-import { useTokenStore } from "@/stores/tokenStore";
-import { Alert, Snackbar } from "@mui/material";
-import axios from "axios";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import AddUnitComponent from "@/features/Dashboard/Unit/AddUnitComponent";
+import UnitListPreviewComponent from "@/features/Dashboard/Unit/UnitListPreviewComponent";
+import Loading from "@/components/Loading";
+import useFetchUnit from "@/hooks/useFetchUnit";
+import AdminPageLayout from "@/layouts/AdminPageLayout";
+import { Alert, Snackbar } from "@mui/material";
+import { useState } from "react";
+import ProtectedRoute from "../../../features/Dashboard/Components/ProtectedRoute";
 
 function UnitPage() {
-  const { setUnits } = useDashboardStore();
-  const {token} = useTokenStore()
-  const router = useRouter()
-
+  const { loading, snackBar, setSnackBar, setLoading } = useFetchUnit();
   const [addUnit, setAddUnit] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [snackBar, setSnackBar] = useState({
-    type: "success",
-    message: "Hello World!",
-    open: false,
-  });
-
-  useEffect(() => {
-    axios
-      .get(`${backEndUrls.local}unit/all`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(({ data }) => {
-        setUnits(data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setSnackBar({
-          type: "error",
-          message: err.response.data.message,
-          open: true,
-        });
-        router.push("/");
-      });
-  }, []);
 
   return (
     <>
       <Head>
         <title>Units</title>
         <meta name="description" content="The best real-estate in ethiopia." />
-        <link rel="icon" href="/images/logo1.png" />
+        <link rel="icon" href="/logo1.png" />
       </Head>
-      <main
-        style={{
-          height: "100vh",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <ProtectedRoute>
         <AdminPageLayout pageIndex={3}>
           {addUnit ? (
             <AddUnitComponent
@@ -98,7 +56,7 @@ function UnitPage() {
             {snackBar?.message}
           </Alert>
         </Snackbar>
-      </main>
+      </ProtectedRoute>
     </>
   );
 }

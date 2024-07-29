@@ -1,102 +1,81 @@
+import Head from "next/head";
 import {
   Alert,
   Avatar,
   Box,
   Button,
   Checkbox,
-  Container,
   FormControlLabel,
   Grid,
   Snackbar,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Copyright } from "@/components/Auth/copyright";
 import { useRouter } from "next/router";
-import axios from "axios";
-import { backEndUrls } from "..";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useState } from "react";
-import { useStore } from "@/stores/userStore";
-
-const defaultTheme = createTheme();
+import { userStore } from "@/stores/userStore";
+import { Copyright } from "@/features/CopyRight/copyright";
+import handleRegister from "@/api/auth/handleRegister";
+import { PersonPin } from "@mui/icons-material";
+import Loading from "@/components/Loading";
 
 export default function SignUp() {
-  const {setUser} = useStore()
+  const { setUser } = userStore();
   const { setToken } = useTokenStore();
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({
-    type: false,
+    type: "success",
     message: "Hello World!",
     open: false,
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-    });
-
-    axios
-      .post(`${backEndUrls.local}auth/register`, {
-        email: data.get("email"),
-        password: data.get("password"),
-        name: data.get("firstName") + data.get("lastName"),
-      })
-      .then(({ data }) => {
-        setSnackBar({
-          type: false,
-          message: data.message,
-          open: true,
-        });
-
-        setToken(data.token);
-        setUser(data.user);
-        router.push("/");
-      })
-      .catch((err) => {
-        setSnackBar({
-          type: true,
-          message:
-            err?.response?.data?.message ||
-            "Something went wrong, please try again!",
-          open: true,
-        });
-      });
-  };
-
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <>
+      <Head>
+        <title>Rise Addis Properties</title>
+        <meta
+          name="description"
+          content="The best and affordable real-estate in ethiopia"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo1.png" />
+      </Head>
+      <main style={{ position: "relative" }}>
+        <Stack
+          height={"100vh"}
+          alignItems={"center"}
+          justifyContent={"center"}
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
             alignItems: "center",
             position: "relative",
             bgcolor: "rgba(255,255,255,0.8)",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <PersonPin />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
           <Box
+            width={"90%"}
+            maxWidth={"400px"}
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={(event) =>
+              handleRegister({
+                event,
+                setSnackBar,
+                setLoading,
+                setToken,
+                setUser,
+                router,
+              })
+            }
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -113,7 +92,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -188,25 +166,28 @@ export default function SignUp() {
             alt={"Logo"}
             zIndex={-1}
           />
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={snackBar?.open}
-        onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
-        autoHideDuration={3000}
-        key={"top" + "right"}
-      >
-        <Alert
+          <Copyright sx={{ mt: 5 }} />
+        </Stack>
+
+        {loading && <Loading />}
+
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={snackBar?.open}
           onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
-          severity={snackBar.type ? "error" : "success"}
-          variant="filled"
-          sx={{ width: "100%" }}
+          autoHideDuration={3000}
+          key={"top" + "right"}
         >
-          {snackBar.message}
-        </Alert>
-      </Snackbar>
-    </ThemeProvider>
+          <Alert
+            onClose={() => setSnackBar((p) => ({ ...p, open: false }))}
+            severity={snackBar.type}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackBar.message}
+          </Alert>
+        </Snackbar>
+      </main>
+    </>
   );
 }

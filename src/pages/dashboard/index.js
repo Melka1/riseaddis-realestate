@@ -1,49 +1,13 @@
-import { useStore } from "@/stores/userStore";
-import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Box,
-  Button,
-  Divider,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
-// import axios from "axios";
-// import { backEndUrls } from "..";
-import TopAddressBar from "@/components/Home/TopAddress";
-import AddRealEstateComponent from "@/components/Dashboard/RealEstate/AddRealEstateComponent";
-import RealEstateListPreviewComponent from "@/components/Dashboard/RealEstate/RealesatateListPreviewComponent";
+import { Alert, Snackbar } from "@mui/material";
 import Head from "next/head";
 import AdminPageLayout from "@/layouts/AdminPageLayout";
 import Loading from "@/components/Loading";
-import { useRouter } from "next/router";
-import { useTokenStore } from "@/stores/tokenStore";
-
-const buttons = [
-  "Overview",
-  "Real-estates",
-  "Sites",
-  "Units",
-  "Users",
-  "Settings",
-];
+import useFetchDashboard from "@/hooks/useFetchDashboard";
+import OverviewPreviewContainer from "@/features/Dashboard/Home/OverviewPreviewContainer";
+import ProtectedRoute from "../../features/Dashboard/Components/ProtectedRoute";
 
 function AdminPage() {
-  const { token } = useTokenStore();
-  const router = useRouter();
-
-  const [loading, setLoading] = useState(true);
-
-  const [snackBar, setSnackBar] = useState({
-    type: "success",
-    message: "Hello World!",
-    open: false,
-  });
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  const { loading, setLoading, snackBar, setSnackBar } = useFetchDashboard();
 
   return (
     <>
@@ -53,30 +17,11 @@ function AdminPage() {
           name="description"
           content="The best and affordable real-estate in ethiopia"
         />
-        <link rel="icon" href="/images/logo1.png" />
+        <link rel="icon" href="/logo1.png" />
       </Head>
-      <main
-        style={{
-          height: "100vh",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <ProtectedRoute>
         <AdminPageLayout pageIndex={0}>
-          {/* {addRealEstate ? (
-            <AddRealEstateComponent
-              setAddRealEstate={setAddRealEstate}
-              setLoading={setLoading}
-              setSnackBar={setSnackBar}
-            />
-          ) : (
-            <RealEstateListPreviewComponent
-              setAddRealEstate={setAddRealEstate}
-              setLoading={setLoading}
-              setSnackBar={setSnackBar}
-            />
-          )} */}
+          <OverviewPreviewContainer setLoading={setLoading} />
         </AdminPageLayout>
         {loading && <Loading />}
         <Snackbar
@@ -99,7 +44,7 @@ function AdminPage() {
             {snackBar?.message}
           </Alert>
         </Snackbar>
-      </main>
+      </ProtectedRoute>
     </>
   );
 }

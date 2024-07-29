@@ -1,16 +1,22 @@
 import axios from "axios";
 
-import { backEndUrls } from "..";
+import { chosenBackendUrl } from "..";
 
 import Head from "next/head";
-import RealEstateCarousel from "../../components/Realestates/components/RealEstateCarousel";
-import Footer from "@/components/Home/Footer";
-import RealEstateList from "../../components/Realestates/components/RealEstate";
-import NavBar from "@/components/Home/NavBar";
+import RealEstateCarousel from "../../features/Realestates/components/RealEstateCarousel";
+import Footer from "@/features/Home/Footer";
+import RealEstateList from "../../features/Realestates/components/RealEstate";
+import NavBar from "@/features/Home/NavBar";
 import WhatsappContainer from "@/components/whatsappContainer";
 import ContactUsContainer from "@/components/ContactUsContainer";
+import ErrorPage from "@/components/ErrorPage";
+import logger from "@/utils/logger";
 
-function RealEstate({ realEstates, sites }) {
+function RealEstate({ realEstates, sites, articles, error }) {
+  if (error) {
+    return <ErrorPage />;
+  }
+
   return (
     <>
       <Head>
@@ -23,7 +29,11 @@ function RealEstate({ realEstates, sites }) {
         <link rel="icon" href="/images/logo1.png" />
       </Head>
       <main style={{ position: "relative" }}>
-        <NavBar page={"/project"} realEstates={realEstates} />
+        <NavBar
+          page={"/project"}
+          realEstates={realEstates}
+          articles={articles}
+        />
         <RealEstateCarousel sites={sites} />
         <RealEstateList realEstates={realEstates} />
         <Footer realEstates={realEstates} />
@@ -36,16 +46,32 @@ function RealEstate({ realEstates, sites }) {
 
 export default RealEstate;
 
-export async function getStaticProps() {
-  const sitesResponse = await axios.get(`${backEndUrls.vercel}site`);
+export async function getServerSideProps() {
+  try {
+    const sitesRequest = axios.get(`${chosenBackendUrl}site`);
+    const realEstatesRequest = axios.get(`${chosenBackendUrl}realestate`);
+    const articlesRequest = axios.get(`${chosenBackendUrl}article`);
 
-  const realestatesResponse = await axios.get(
-    `${backEndUrls.vercel}realestate`
-  );
-  return {
-    props: {
-      sites: await sitesResponse.data.sites,
-      realEstates: await realestatesResponse.data.realEstates,
-    },
-  };
+    const [sitesResponse, realEstatesResponse, articlesResponse] =
+      await Promise.all([sitesRequest, realEstatesRequest, articlesRequest]);
+
+    return {
+      props: {
+        sites: sitesResponse.data.sites,
+        realEstates: realEstatesResponse.data.realEstates,
+        articles: articlesResponse.data.articles,
+        error: false,
+      },
+    };
+  } catch (error) {
+    logger(error);
+    return {
+      props: {
+        error: {
+          status: true,
+          code: error?.response?.status || null,
+        },
+      },
+    };
+  }
 }

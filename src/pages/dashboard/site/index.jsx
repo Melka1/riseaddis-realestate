@@ -1,51 +1,16 @@
-import AddSiteComponent from "@/components/Dashboard/Site/AddSiteComponent";
-import SiteListPreviewComponent from "@/components/Dashboard/Site/SiteListPreviewComponent";
+import AddSiteComponent from "@/features/Dashboard/Site/AddSiteComponent";
+import SiteListPreviewComponent from "@/features/Dashboard/Site/SiteListPreviewComponent";
 import Loading from "@/components/Loading";
-import AdminPageLayout from "@/layouts/adminPageLayout";
-import { backEndUrls } from "@/pages";
-import { useDashboardStore } from "@/stores/dashboardStore";
-import { useTokenStore } from "@/stores/tokenStore";
+import useFetchSite from "@/hooks/useFetchSite";
+import AdminPageLayout from "@/layouts/AdminPageLayout";
 import { Alert, Snackbar } from "@mui/material";
-import axios from "axios";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ProtectedRoute from "../../../features/Dashboard/Components/ProtectedRoute";
 
 function SitePage() {
-  const { setSites } = useDashboardStore();
-  const { token } = useTokenStore();
-  const router = useRouter();
-
+  const { loading, error, snackBar, setSnackBar, setLoading } = useFetchSite();
   const [addSite, setAddSite] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [snackBar, setSnackBar] = useState({
-    type: "success",
-    message: "Hello World!",
-    open: false,
-  });
-
-  useEffect(() => {
-    axios
-      .get(`${backEndUrls.local}site/all`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(({ data }) => {
-        setSites(data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setSnackBar({
-          type: "error",
-          message: err.response.data.message,
-          open: true,
-        });
-        router.push("/");
-      });
-  }, []);
 
   return (
     <>
@@ -54,14 +19,7 @@ function SitePage() {
         <meta name="description" content="The best real-estate in ethiopia." />
         <link rel="icon" href="/images/logo1.png" />
       </Head>
-      <main
-        style={{
-          height: "100vh",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <ProtectedRoute>
         <AdminPageLayout pageIndex={2}>
           {addSite ? (
             <AddSiteComponent
@@ -98,7 +56,7 @@ function SitePage() {
             {snackBar?.message}
           </Alert>
         </Snackbar>
-      </main>
+      </ProtectedRoute>
     </>
   );
 }

@@ -15,8 +15,20 @@ function ListItem({ width, imageUrl, name }) {
         gap={"0.5rem"}
         color={"rise.light"}
       >
-        <Box component={"img"} width={"20px"} height={"20px"} src={imageUrl} />
-        <Typography fontSize={{ xs: "0.8rem", md: "1rem" }}>{name}</Typography>
+        <Box
+          component={"img"}
+          width={"20px"}
+          height={"20px"}
+          src={imageUrl}
+          aria-label="Amenity Image"
+          alt="amenity"
+        />
+        <Typography
+          fontSize={{ xs: "0.8rem", md: "1rem" }}
+          color={"text.contrast"}
+        >
+          {name}
+        </Typography>
       </Box>
     </Grid>
   );

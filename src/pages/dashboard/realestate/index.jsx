@@ -1,51 +1,18 @@
-import AddRealEstateComponent from "@/components/Dashboard/RealEstate/AddRealEstateComponent";
-import RealEstateListPreviewComponent from "@/components/Dashboard/RealEstate/RealesatateListPreviewComponent";
+import AddRealEstateComponent from "@/features/Dashboard/RealEstate/AddRealEstateComponent";
+import RealEstateListPreviewComponent from "@/features/Dashboard/RealEstate/RealesatateListPreviewComponent";
 import Loading from "@/components/Loading";
-import AdminPageLayout from "@/layouts/adminPageLayout";
-import { backEndUrls } from "@/pages";
-import { useDashboardStore } from "@/stores/dashboardStore";
-import { useTokenStore } from "@/stores/tokenStore";
+import useFetchRealEstate from "@/hooks/useFetchRealEstate";
+import AdminPageLayout from "@/layouts/AdminPageLayout";
 import { Alert, Snackbar } from "@mui/material";
-import axios from "axios";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ProtectedRoute from "../../../features/Dashboard/Components/ProtectedRoute";
 
 function RealEstatePage() {
-  const { setRealEstates } = useDashboardStore();
-  const { token } = useTokenStore();
-  const router = useRouter();
+  const { loading, setLoading, error, snackBar, setSnackBar } =
+    useFetchRealEstate();
 
   const [addRealEstate, setAddRealEstate] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [snackBar, setSnackBar] = useState({
-    type: "success",
-    message: "Hello World!",
-    open: false,
-  });
-
-  useEffect(() => {
-    axios
-      .get(`${backEndUrls.local}realestate/all`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(({ data }) => {
-        setRealEstates(data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setSnackBar({
-          type: "error",
-          message: err.response.data.message,
-          open: true,
-        });
-        router.push("/");
-      });
-  }, []);
 
   return (
     <>
@@ -57,14 +24,7 @@ function RealEstatePage() {
         />
         <link rel="icon" href="/images/logo1.png" />
       </Head>
-      <main
-        style={{
-          height: "100vh",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <ProtectedRoute>
         <AdminPageLayout pageIndex={1}>
           {addRealEstate ? (
             <AddRealEstateComponent
@@ -101,20 +61,9 @@ function RealEstatePage() {
             {snackBar?.message}
           </Alert>
         </Snackbar>
-      </main>
+      </ProtectedRoute>
     </>
   );
 }
 
 export default RealEstatePage;
-
-// export async function getStaticProps() {
-//   const realEstatesResponse = await axios.get(
-//     `${backEndUrls.local}realestate/all`
-//   );
-//   return {
-//     props: {
-//       realEstatesFromServer: realEstatesResponse.data.data,
-//     },
-//   };
-// }

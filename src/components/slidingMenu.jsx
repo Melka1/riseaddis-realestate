@@ -11,8 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { usePropertyStore } from "@/stores/propertyStore";
-import { useStore } from "@/stores/userStore";
+import { userStore } from "@/stores/userStore";
 import { useRouter } from "next/router";
 
 const style = {
@@ -39,9 +38,9 @@ const blogList = [
   },
 ];
 
-function SlidingMenu({ open, handleClose, realEstates }) {
+function SlidingMenu({ open, handleClose, realEstates, articles }) {
   const router = useRouter();
-  const { user, setUser } = useStore();
+  const { user, setUser } = userStore();
   return (
     <Modal
       open={open}
@@ -103,7 +102,7 @@ function SlidingMenu({ open, handleClose, realEstates }) {
                 className="list"
                 component={"a"}
                 width={1}
-                onClick={() => router.push(`/`)}
+                href="/"
                 sx={{
                   fontWeight: "bold",
                   textAlign: "left",
@@ -148,7 +147,7 @@ function SlidingMenu({ open, handleClose, realEstates }) {
                   className="list"
                   component={"a"}
                   width={1}
-                  onClick={() => router.push(`/real-estate`)}
+                  href="/real-estate"
                   sx={{
                     fontWeight: "bold",
                     textAlign: "left",
@@ -213,71 +212,35 @@ function SlidingMenu({ open, handleClose, realEstates }) {
               })}
             </Box>
 
-            <Box width={1}>
-              <Button
-                fullWidth
-                sx={{
-                  display: "flex",
-                  fontSize: { xs: "0.8rem", sm: "1.25rem" },
-                  justifyContent: "flex-start",
-                  position: "relative",
-                  "&:hover .sublist": {
-                    display: "block",
-                  },
-                  "&:hover .list::after": {
-                    width: "100%",
-                  },
-                }}
-              >
-                <Box
-                  position={"relative"}
-                  className="list"
-                  component={"a"}
-                  width={1}
-                  onClick={() => router.push(`/blog`)}
+            {articles.length > 0 && (
+              <Box width={1}>
+                <Button
+                  fullWidth
                   sx={{
-                    fontWeight: "bold",
-                    textAlign: "left",
-                    color: "addisLight.main",
-                    "&:hover": {
-                      color: "addisLight.main",
+                    display: "flex",
+                    fontSize: { xs: "0.8rem", sm: "1.25rem" },
+                    justifyContent: "flex-start",
+                    position: "relative",
+                    "&:hover .sublist": {
+                      display: "block",
                     },
-                    "&::after": {
-                      position: "absolute",
-                      content: "''",
-                      width: 0,
-                      height: " 2px",
-                      left: 0,
-                      bottom: "-5px",
-                      backgroundColor: "addisLight.main",
-                      transition: "width ease-in-out 0.3s",
+                    "&:hover .list::after": {
+                      width: "100%",
                     },
                   }}
                 >
-                  News & Articles
-                </Box>
-              </Button>
-              {blogList.map((blog, ind) => {
-                return (
-                  <Button
-                    fullWidth
-                    title=""
-                    color="rise"
-                    key={ind}
-                    onClick={() => router.push(`/${blog.link}`)}
+                  <Box
+                    position={"relative"}
+                    className="list"
+                    component={"a"}
+                    width={1}
+                    onClick={() => router.push(`/blog`)}
                     sx={{
-                      ml: "1rem",
-                      fontSize: { xs: "0.8rem", sm: "1.25rem" },
-                      color: "rise.main",
-                      textTransform: "capitalize",
-                      justifyContent: "flex-start",
+                      fontWeight: "bold",
                       textAlign: "left",
-                      transition: "all 0.3s",
-                      "&:hover::after": {
-                        width: "calc(100%)",
-                      },
+                      color: "addisLight.main",
                       "&:hover": {
-                        transform: "translateX(10px)",
+                        color: "addisLight.main",
                       },
                       "&::after": {
                         position: "absolute",
@@ -291,11 +254,49 @@ function SlidingMenu({ open, handleClose, realEstates }) {
                       },
                     }}
                   >
-                    {blog.name}
-                  </Button>
-                );
-              })}
-            </Box>
+                    News & Articles
+                  </Box>
+                </Button>
+                {articles.map((article, ind) => {
+                  return (
+                    <Button
+                      fullWidth
+                      title=""
+                      color="rise"
+                      key={ind}
+                      onClick={() => router.push(`/blog/${article.link}`)}
+                      sx={{
+                        ml: "1rem",
+                        fontSize: { xs: "0.8rem", sm: "1.25rem" },
+                        color: "rise.main",
+                        textTransform: "capitalize",
+                        justifyContent: "flex-start",
+                        textAlign: "left",
+                        transition: "all 0.3s",
+                        "&:hover::after": {
+                          width: "calc(100%)",
+                        },
+                        "&:hover": {
+                          transform: "translateX(10px)",
+                        },
+                        "&::after": {
+                          position: "absolute",
+                          content: "''",
+                          width: 0,
+                          height: " 2px",
+                          left: 0,
+                          bottom: "-5px",
+                          backgroundColor: "addisLight.main",
+                          transition: "width ease-in-out 0.3s",
+                        },
+                      }}
+                    >
+                      {article.title}
+                    </Button>
+                  );
+                })}
+              </Box>
+            )}
 
             <Button
               fullWidth
@@ -317,7 +318,7 @@ function SlidingMenu({ open, handleClose, realEstates }) {
                 className="list"
                 component={"a"}
                 width={1}
-                onClick={() => router.push(`/contact-us`)}
+                href="/contact-us"
                 sx={{
                   fontWeight: "bold",
                   textAlign: "left",
@@ -343,14 +344,11 @@ function SlidingMenu({ open, handleClose, realEstates }) {
           </Stack>
           <Divider flexItem sx={{ borderColor: "background.paper" }} />
           <Box display={"flex"} p={{ xs: 2, sm: 4 }} width={1}>
-            <IconButton
-              // onClick={handleOpenUserMenu}
-              sx={{ p: 0, bgcolor: "transparent" }}
-            >
+            <IconButton sx={{ p: 0, bgcolor: "transparent" }}>
               {user?.name ? (
                 <Avatar
                   alt={user.name}
-                  src={user.imgUrl}
+                  src={user.image}
                   sx={{
                     width: { xs: 35, sm: 55 },
                     height: { xs: 35, sm: 55 },

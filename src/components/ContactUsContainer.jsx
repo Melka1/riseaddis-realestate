@@ -1,26 +1,28 @@
+import { userStore } from "@/stores/userStore";
 import {
   Avatar,
   Box,
   Button,
-  Divider,
   IconButton,
-  Link,
   Slide,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 
 function ContactUsContainer() {
+  const { user } = userStore();
   const [displayPhoneList, setDisplayPhoneList] = useState(false);
   const containerRef = useRef(null);
+  const [name, setName] = useState(user?.name || "");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [message, setMessage] = useState("");
 
   return (
     <Stack
       position={"fixed"}
       ref={containerRef}
-      top={"80vh"}
+      top={{ xs: "90vh", md: "80vh" }}
       right={{ xs: "0.5rem", sm: "1rem" }}
       zIndex={1001}
       onMouseLeave={() => setDisplayPhoneList(false)}
@@ -37,10 +39,12 @@ function ContactUsContainer() {
         onClick={() => {
           setDisplayPhoneList((d) => !d);
         }}
+        aria-label="contact us container"
       >
         <Avatar
           sx={{ bgcolor: "white", border: "1px solid darkgray" }}
           src="https://res.cloudinary.com/dchmblw88/image/upload/v1716147685/customer-service_1_u5a99q.png"
+          alt="customer service"
         />
       </IconButton>
       <Slide
@@ -75,6 +79,8 @@ function ContactUsContainer() {
             fullWidth
             id="outlined-basic"
             placeholder="Name"
+            value={name}
+            onChange={({ targer }) => setName(target.vaue)}
             variant="outlined"
             size="small"
             sx={{
@@ -89,6 +95,7 @@ function ContactUsContainer() {
             id="outlined-basic"
             placeholder="Email"
             type={"email"}
+            value={user?.email}
             size="small"
             variant="outlined"
             sx={{
@@ -104,6 +111,8 @@ function ContactUsContainer() {
             placeholder="Phone"
             size="small"
             type={"tel"}
+            value={phoneNumber}
+            onChange={({ target }) => setPhoneNumber(target.value)}
             variant="outlined"
             sx={{
               "&.MuiTextField-root .MuiInputBase-root.MuiOutlinedInput-root ": {
@@ -118,6 +127,8 @@ function ContactUsContainer() {
             placeholder="Message"
             size="small"
             variant="outlined"
+            value={message}
+            onChange={({ target }) => setMessage(target.value)}
             sx={{
               "&.MuiTextField-root .MuiInputBase-root.MuiOutlinedInput-root ": {
                 p: { xs: "0.75rem", sm: "1rem", md: "1rem" },
@@ -133,6 +144,9 @@ function ContactUsContainer() {
             variant="contained"
             color="rise"
             sx={{ p: "0.5rem 2rem" }}
+            href={`mailto:riseaddis1@gmail.com?subject=${
+              name + " " + phoneNumber
+            }&body=${message}`}
           >
             Submit
           </Button>

@@ -1,8 +1,9 @@
 import "@/styles/globals.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Montserrat } from "next/font/google";
+import { Kufam, Montserrat } from "next/font/google";
 
 export const riseFont = Montserrat({ subsets: ["cyrillic"] });
+export const addisFont = Kufam({ subsets: ["arabic"] });
 
 let theme = createTheme({
   palette: {
@@ -24,6 +25,12 @@ export let lTheme = createTheme(theme, {
       },
       name: "riseLight",
     }),
+    riseDark: theme.palette.augmentColor({
+      color: {
+        main: "#595850",
+      },
+      name: "riseDark",
+    }),
     addis: theme.palette.augmentColor({
       color: {
         main: "#f7941f",
@@ -35,6 +42,12 @@ export let lTheme = createTheme(theme, {
         main: "#fbca84",
       },
       name: "addisLight",
+    }),
+    addisDark: theme.palette.augmentColor({
+      color: {
+        main: "#824B0D",
+      },
+      name: "addisDark",
     }),
     darkHover: "#5d5c5740",
     lightHover: "#5d5c5715",

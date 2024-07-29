@@ -11,9 +11,10 @@ const amenityList = [
   "Gymnasium",
 ];
 
-export const useStore = create((set) => ({
+export const userStore = create((set) => ({
   page: "/",
   user: null,
+  users: [],
   property: {},
   project: {},
   searchList: [],
@@ -30,7 +31,6 @@ export const useStore = create((set) => ({
     set(() => ({ page: value }));
   },
   setUser: (value) => {
-    console.log("store", value);
     set(() => ({ user: value }));
   },
   setProperty: (value) => {
@@ -90,5 +90,12 @@ export const useStore = create((set) => ({
   },
   setNearbyHomes: (value) => {
     set(() => ({ nearbyHomes: value }));
+  },
+  setUsers: (value) => {
+    set(() => ({ users: value }));
+  },
+  fetchUsers: async (token) => {
+    const userList = await getUsers(token);
+    set({ users: userList });
   },
 }));

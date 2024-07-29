@@ -17,7 +17,7 @@ function WhatsappContainer() {
     <Stack
       position={"fixed"}
       ref={containerRef}
-      top={"80vh"}
+      top={{ xs: "90vh", md: "80vh" }}
       left={{ xs: "0.5rem", sm: "1rem" }}
       zIndex={1001}
       onMouseLeave={() => setDisplayPhoneList(false)}
@@ -28,8 +28,9 @@ function WhatsappContainer() {
         onClick={() => {
           setDisplayPhoneList((d) => !d);
         }}
+        aria-label="whatsapp links"
       >
-        <Avatar src="/social/whatsapp.png" />
+        <Avatar src="/social/whatsapp.png" alt="whatsapp" />
       </IconButton>
       <Slide
         in={displayPhoneList}

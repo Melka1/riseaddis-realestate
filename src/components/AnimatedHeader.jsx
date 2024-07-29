@@ -1,19 +1,14 @@
-import { Box } from "@mui/material";
-import { useRouter } from "next/router";
-import React from "react";
+import { Box, Typography } from "@mui/material";
 
 function AnimatedHeader({ name, url }) {
-  const router = useRouter();
   return (
     <Box
-      position={"relative"}
       className="list"
       component={"a"}
       color="addisLight.dark"
-      onClick={() => router.push(`/${url}`)}
+      href={url}
       sx={{
-        fontWeight: "bold",
-        "&::after": {
+        "&>p::after": {
           position: "absolute",
           content: "''",
           width: 0,
@@ -25,7 +20,9 @@ function AnimatedHeader({ name, url }) {
         },
       }}
     >
-      {name}
+      <Typography position={"relative"} fontWeight="bold">
+        {name}
+      </Typography>
     </Box>
   );
 }

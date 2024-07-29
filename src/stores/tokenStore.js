@@ -8,7 +8,7 @@ export const useTokenStore = create(
       setToken: (token) => set({ token }),
     }),
     {
-      name: "token",
+      name: "rise_token",
       storage: createJSONStorage(() => sessionStorage),
     }
   )

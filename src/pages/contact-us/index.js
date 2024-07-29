@@ -1,13 +1,13 @@
 import Head from "next/head";
-import React from "react";
-import Footer from "@/components/Home/Footer";
-import NavBar from "@/components/Home/NavBar";
+import axios from "axios";
+import Footer from "@/features/Home/Footer";
+import NavBar from "@/features/Home/NavBar";
 import WhatsappContainer from "@/components/whatsappContainer";
 import ContactUsContainer from "@/components/ContactUsContainer";
-import axios from "axios";
-import { backEndUrls } from "..";
+import logger from "@/utils/logger";
+import { chosenBackendUrl } from "..";
 
-function ContactUs({ realEstates }) {
+function ContactUs({ realEstates, articles }) {
   return (
     <>
       <Head>
@@ -20,7 +20,11 @@ function ContactUs({ realEstates }) {
         <link rel="icon" href="/images/logo1.png" />
       </Head>
       <main style={{ position: "relative" }}>
-        <NavBar page={"/project"} realEstates={realEstates} />
+        <NavBar
+          page={"/project"}
+          realEstates={realEstates}
+          articles={articles}
+        />
         <Footer realEstates={realEstates} />
         <WhatsappContainer />
         <ContactUsContainer />
@@ -31,13 +35,31 @@ function ContactUs({ realEstates }) {
 
 export default ContactUs;
 
-export async function getStaticProps() {
-  const realestatesResponse = await axios.get(
-    `${backEndUrls.vercel}realestate`
-  );
-  return {
-    props: {
-      realEstates: realestatesResponse.data.realEstates,
-    },
-  };
+export async function getServerSideProps() {
+  try {
+    const realEstatesRequest = axios.get(`${chosenBackendUrl}realestate`);
+    const articlesRequest = axios.get(`${chosenBackendUrl}article`);
+
+    const [realEstatesResponse, articlesResponse] = await Promise.all([
+      realEstatesRequest,
+      articlesRequest,
+    ]);
+
+    return {
+      props: {
+        realEstates: realEstatesResponse.data.realEstates,
+        articles: articlesResponse.data.articles,
+      },
+    };
+  } catch (error) {
+    logger(error);
+    return {
+      props: {
+        error: {
+          status: true,
+          code: error?.response?.status || null,
+        },
+      },
+    };
+  }
 }

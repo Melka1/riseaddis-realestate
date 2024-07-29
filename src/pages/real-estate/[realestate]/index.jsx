@@ -1,23 +1,23 @@
 import axios from "axios";
 
-import { backEndUrls } from "@/pages";
+import { chosenBackendUrl } from "@/pages";
 
 import Head from "next/head";
-import NavBar from "@/components/Home/NavBar";
-import RealEstateIntro from "../../../components/Realestate/components/RealEstateIntro";
-import ProjectList from "../../../components/Realestate/components/ProjectList";
-import Projects from "@/components/Home/Projects";
-import Footer from "@/components/Home/Footer";
+import NavBar from "@/features/Home/NavBar";
+import RealEstateIntro from "../../../features/Realestate/components/RealEstateIntro";
+import ProjectList from "../../../features/Realestate/components/ProjectList";
+import Projects from "@/features/Home/Projects";
+import Footer from "@/features/Home/Footer";
 import WhatsappContainer from "@/components/whatsappContainer";
 import ContactUsContainer from "@/components/ContactUsContainer";
-import { useRouter } from "next/router";
+import ErrorPage from "@/components/ErrorPage";
+import logger from "@/utils/logger";
 
-function RealEstate({ realEstate, realEstates }) {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
+function RealEstate({ realEstate, realEstates, articles, error }) {
+  if (error) {
+    return <ErrorPage errorCode={error.code} />;
   }
+
   return (
     <>
       <Head>
@@ -30,14 +30,22 @@ function RealEstate({ realEstate, realEstates }) {
         <link rel="icon" href="/images/logo1.png" />
       </Head>
       <main style={{ position: "relative" }}>
-        <NavBar page={"/real-estate"} realEstates={realEstates} />
+        <NavBar
+          page={"/real-estate"}
+          realEstates={realEstates}
+          articles={articles}
+        />
         <RealEstateIntro realEstateImages={realEstate?.images || []} />
         <ProjectList
           sites={realEstate?.sites}
           link={realEstate?.link}
           background={realEstate?.background}
         />
-        <Projects title={"Other Projects for you"} realEstates={realEstates} />
+        <Projects
+          title={"Other Projects for you"}
+          realEstates={realEstates}
+          realEstate={realEstate}
+        />
         <Footer realEstates={realEstates} />
         <WhatsappContainer />
         <ContactUsContainer />
@@ -48,33 +56,37 @@ function RealEstate({ realEstate, realEstates }) {
 
 export default RealEstate;
 
-export async function getStaticPaths() {
-  const response = await axios.get(`${backEndUrls.vercel}realestate`);
+export async function getServerSideProps({ params }) {
+  try {
+    const realEstateRequest = axios.get(
+      `${chosenBackendUrl}realestate/${params.realestate}`
+    );
+    const realEstatesRequest = axios.get(`${chosenBackendUrl}realestate`);
+    const articlesRequest = axios.get(`${chosenBackendUrl}article`);
+    const [realEstateResponse, realEstatesResponse, articlesResponse] =
+      await Promise.all([
+        realEstateRequest,
+        realEstatesRequest,
+        articlesRequest,
+      ]);
 
-  let paths = response.data.realEstates.map((realEstate) => ({
-    params: {
-      realestate: realEstate.link,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const realestateResponse = await axios.get(
-    `${backEndUrls.vercel}realestate/${params.realestate}`
-  );
-
-  const realestatesResponse = await axios.get(
-    `${backEndUrls.vercel}realestate`
-  );
-  return {
-    props: {
-      realEstate: await realestateResponse.data.data,
-      realEstates: await realestatesResponse.data.realEstates,
-    },
-  };
+    return {
+      props: {
+        realEstate: realEstateResponse.data.realEstate,
+        realEstates: realEstatesResponse.data.realEstates,
+        articles: articlesResponse.data.articles,
+        error: false,
+      },
+    };
+  } catch (error) {
+    logger(error);
+    return {
+      props: {
+        error: {
+          status: true,
+          code: error?.response?.status || null,
+        },
+      },
+    };
+  }
 }
